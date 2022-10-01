@@ -2,10 +2,14 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
@@ -16,11 +20,11 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BombermanGame extends Application {
-    
+public class BombermanGame extends Application implements EventHandler<ActionEvent> {
+
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
-    
+
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
@@ -33,6 +37,22 @@ public class BombermanGame extends Application {
 
     @Override
     public void start(Stage stage) {
+        stage.setTitle("BombermanGame");
+        Button button = new Button();
+        button.setText("Start");
+        button.setOnAction(this);
+        StackPane layout = new StackPane();
+        layout.getChildren().add(button);
+        Scene scene = new Scene(layout,Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        stage.setScene(scene);
+        stage.show();
+
+}
+    @Override
+    public void handle(ActionEvent event){
+        startGame(new Stage());
+    }
+    public void startGame(Stage stage){
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
@@ -47,7 +67,6 @@ public class BombermanGame extends Application {
         // Them scene vao stage
         stage.setScene(scene);
         stage.show();
-
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -88,3 +107,4 @@ public class BombermanGame extends Application {
         entities.forEach(g -> g.render(gc));
     }
 }
+
