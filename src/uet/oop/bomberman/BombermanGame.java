@@ -2,28 +2,27 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BombermanGame extends Application implements EventHandler<ActionEvent> {
+public class BombermanGame extends Application {
+    Stage window;
+    Scene sceneMenu;
+    public int WIDTH;
+    public int HEIGHT;
 
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
+    public  int level;
 
     private GraphicsContext gc;
     private Canvas canvas;
@@ -34,23 +33,34 @@ public class BombermanGame extends Application implements EventHandler<ActionEve
     public static void main(String[] args) {
         Application.launch(args);
     }
-
+    //TODO
+    /*
+    Can them background, can giua cho nut, them scene chon level sau sceneMenu
+     */
     @Override
     public void start(Stage stage) {
-        stage.setTitle("BombermanGame");
-        Button button = new Button();
-        button.setText("Start");
-        button.setOnAction(this);
-        StackPane layout = new StackPane();
-        layout.getChildren().add(button);
-        Scene scene = new Scene(layout,Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
-        stage.setScene(scene);
-        stage.show();
-
+        window=stage;
+        window.setTitle("BomberMan");
+        Button buttonPlay = new Button("Play");
+        Button buttonRanking = new Button("Ranking Board");
+        VBox layoutMenu = new VBox();
+        sceneMenu = new Scene(layoutMenu, 300,300);
+        window.setScene(sceneMenu);
+        layoutMenu.getChildren().addAll(buttonPlay, buttonRanking);
+        buttonPlay.setOnAction(event ->{
+            startGame(window);
+        });
+        buttonRanking.setOnAction(event ->{
+            displayRanking(window);
+        });
+        window.show();
 }
-    @Override
-    public void handle(ActionEvent event){
-        startGame(new Stage());
+    //TODO
+    /*
+    Them nut quay lai scene menu
+     */
+    public void displayRanking(Stage window){
+
     }
     public void startGame(Stage stage){
         // Tao Canvas
@@ -83,18 +93,13 @@ public class BombermanGame extends Application implements EventHandler<ActionEve
     }
 
     public void createMap() {
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
-                Entity object;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
-                    object = new Wall(i, j, Sprite.wall.getFxImage());
-                }
-                else {
-                    object = new Grass(i, j, Sprite.grass.getFxImage());
-                }
-                stillObjects.add(object);
-            }
+        String fileLink="";
+        if(level == 1){
+            fileLink="level1.txt";
         }
+        map levelMap = new map();
+        levelMap.loadMap(fileLink);
+
     }
 
     public void update() {
