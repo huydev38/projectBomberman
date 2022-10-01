@@ -9,8 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
@@ -19,8 +18,8 @@ import java.util.List;
 public class BombermanGame extends Application {
     Stage window;
     Scene sceneMenu;
-    public int WIDTH;
-    public int HEIGHT;
+    public int WIDTH=20;
+    public int HEIGHT=20;
 
     public  int level;
 
@@ -63,6 +62,7 @@ public class BombermanGame extends Application {
 
     }
     public void startGame(Stage stage){
+        createMap();
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
@@ -86,20 +86,43 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
-        createMap();
 
         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
     }
 
     public void createMap() {
-        String fileLink="";
+        //level de test
+        level =1;
+        String fileLink=null;
         if(level == 1){
-            fileLink="level1.txt";
+            fileLink="res/levels/level1.txt";
         }
         map levelMap = new map();
         levelMap.loadMap(fileLink);
-
+        WIDTH=levelMap.getW();
+        HEIGHT=levelMap.getH();
+        for(int i=0;i<levelMap.getH();i++){
+            for(int j=0;j<levelMap.getW();j++){
+                //System.out.print(levelMap.getCharacter(i,j));
+                char chr = levelMap.getCharacter(i,j);
+                switch (chr){
+                    case '*':
+                        Entity brick = new Brick(j,i,Sprite.brick.getFxImage());
+                        stillObjects.add(brick);
+                        break;
+                    case '#':
+                        Entity wall = new Wall(j,i,Sprite.wall.getFxImage());
+                        stillObjects.add(wall);
+                        break;
+                    default:
+                        Entity grass = new Grass(j,i,Sprite.grass.getFxImage());
+                        stillObjects.add(grass);
+                        break;
+                }
+            }
+            //System.out.println();
+        }
     }
 
     public void update() {

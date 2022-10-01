@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class map {
-    private int h, w;
+    private int h=100, w=100;
     private char[][] mapMatrix = new char[h][w];
 
     public map() {
@@ -38,9 +38,11 @@ public class map {
         int lv = sc.nextInt();
         h=sc.nextInt();
         w=sc.nextInt();
+        String temp=sc.nextLine();
         for(int i=0;i<h;i++){
-            for(int j=0;j<h;j++){
-                mapMatrix[i][j]=
+            String line=sc.nextLine();
+            for(int j=0;j<w;j++){
+                mapMatrix[i][j]=line.charAt(j);
             }
         }
     }
