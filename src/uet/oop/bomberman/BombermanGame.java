@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BombermanGame extends Application {
-    
+    //so nay lay theo file config
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
     
@@ -62,7 +62,7 @@ public class BombermanGame extends Application {
         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
     }
-
+    //khong dung ham nay, doc file config txt
     public void createMap() {
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT; j++) {
