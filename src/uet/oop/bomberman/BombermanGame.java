@@ -28,7 +28,7 @@ public class BombermanGame extends Application {
 
 
     public static void main(String[] args) {
-        Application.launch(BombermanGame.class);
+        Application.launch(args);
     }
 
     @Override
