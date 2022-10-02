@@ -5,7 +5,7 @@ import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomber extends Entity {
-    private KeyCode direction;
+
     private int bombCount=1;
     private int speed=1;
     private int heart=3;
@@ -13,6 +13,7 @@ public class Bomber extends Entity {
     private boolean moveDOWN;
     private boolean moveRIGHT;
     private boolean moveLEFT;
+
     public Bomber(int x, int y, Image img) {
         super( x, y, img);
     }
@@ -24,6 +25,12 @@ public class Bomber extends Entity {
 
     public int getBombCount() {
         return bombCount;
+    }
+    public int getX(){
+        return x;
+    }
+    public int getY(){
+        return y;
     }
 
     public void setBombCount(int bombCount) {
@@ -46,12 +53,24 @@ public class Bomber extends Entity {
         return speed;
     }
     public void moving(){
-        if(moveLEFT) {
-            x -= speed;
+        if(moveLEFT) {x -= speed;
+        setImg((Sprite.movingSprite(Sprite.player_left,Sprite.player_left_1,Sprite.player_left_2,getX(),15)).getImage());
         }
-        if(moveRIGHT) x+=speed;
-        if(moveUP) y-=speed;
-        if(moveDOWN) y+=speed;
+        if(moveRIGHT) {
+            x += speed;
+            setImg((Sprite.movingSprite(Sprite.player_right,Sprite.player_right_1,Sprite.player_right_2,getX(),15)).getImage());
+
+        }
+        if(moveUP) {
+            y -= speed;
+            setImg((Sprite.movingSprite(Sprite.player_up,Sprite.player_up_1,Sprite.player_up_2,getY(),15)).getImage());
+
+        }
+        if(moveDOWN){
+            y+=speed;
+            setImg((Sprite.movingSprite(Sprite.player_down,Sprite.player_down_1,Sprite.player_down_2,getY(),15)).getImage());
+
+        }
     }
     public void handleKeyPress(KeyCode k){
 
