@@ -2,11 +2,13 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
@@ -87,12 +89,25 @@ public class BombermanGame extends Application {
         timer.start();
 
 
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getImage());
         entities.add(bomberman);
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                bomberman.handleKeyReleased(keyEvent.getCode());
+            }
+        });
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                bomberman.handleKeyPress(keyEvent.getCode());
+            }
+        });
     }
 
     public void createMap() {
-        //level de test
+        //TODO
+        //level de test, can them level
         level =1;
         String fileLink=null;
         if(level == 1){
@@ -108,15 +123,23 @@ public class BombermanGame extends Application {
                 char chr = levelMap.getCharacter(i,j);
                 switch (chr){
                     case '*':
-                        Entity brick = new Brick(j,i,Sprite.brick.getFxImage());
-                        stillObjects.add(brick);
+                        Brick brick = new Brick(j,i,Sprite.brick.getFxImage());
+                        entities.add(brick);
                         break;
                     case '#':
-                        Entity wall = new Wall(j,i,Sprite.wall.getFxImage());
+                        Wall wall = new Wall(j,i,Sprite.wall.getFxImage());
                         stillObjects.add(wall);
                         break;
+                    case 'x':
+                        Portal portal = new Portal(j,i,Sprite.brick.getFxImage());
+                        entities.add(portal);
+                        break;
+                    case 'b':
+                        itemBomb bombItem = new itemBomb(j,i,Sprite.brick.getFxImage());
+                        entities.add(bombItem);
+                        break;
                     default:
-                        Entity grass = new Grass(j,i,Sprite.grass.getFxImage());
+                        Grass grass = new Grass(j,i,Sprite.grass.getFxImage());
                         stillObjects.add(grass);
                         break;
                 }
