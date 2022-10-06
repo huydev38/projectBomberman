@@ -18,13 +18,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BombermanGame extends Application {
+
     Stage window;
     Scene sceneMenu;
     public int WIDTH=50;
     public int HEIGHT=50;
 
     public  int level;
-
+    
+    //so nay lay theo file config
+    public static final int WIDTH = 20;
+    public static final int HEIGHT = 15;
+    
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
@@ -104,7 +109,7 @@ public class BombermanGame extends Application {
             }
         });
     }
-
+    //khong dung ham nay, doc file config txt
     public void createMap() {
         //TODO
         //level de test, can them level
