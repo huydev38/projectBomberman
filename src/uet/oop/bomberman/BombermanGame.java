@@ -2,21 +2,30 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BombermanGame extends Application {
+
+    Stage window;
+    Scene sceneMenu;
+    public int WIDTH=50;
+    public int HEIGHT=50;
+
+    public  int level;
+    
     //so nay lay theo file config
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
@@ -28,11 +37,39 @@ public class BombermanGame extends Application {
 
 
     public static void main(String[] args) {
-        Application.launch(BombermanGame.class);
+        Application.launch(args);
     }
-
+    //TODO
+    /*
+    Can them background, can giua cho nut, them scene chon level sau sceneMenu
+     */
     @Override
     public void start(Stage stage) {
+        window=stage;
+        window.setTitle("BomberMan");
+        Button buttonPlay = new Button("Play");
+        Button buttonRanking = new Button("Ranking Board");
+        VBox layoutMenu = new VBox();
+        sceneMenu = new Scene(layoutMenu, 1080,400);
+        window.setScene(sceneMenu);
+        layoutMenu.getChildren().addAll(buttonPlay, buttonRanking);
+        buttonPlay.setOnAction(event ->{
+            startGame(window);
+        });
+        buttonRanking.setOnAction(event ->{
+            displayRanking(window);
+        });
+        window.show();
+}
+    //TODO
+    /*
+    Them nut quay lai scene menu
+     */
+    public void displayRanking(Stage window){
+
+    }
+    public void startGame(Stage stage){
+        createMap();
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
@@ -47,34 +84,72 @@ public class BombermanGame extends Application {
         // Them scene vao stage
         stage.setScene(scene);
         stage.show();
-
         AnimationTimer timer = new AnimationTimer() {
             @Override
-            public void handle(long l) {
+            public void handle(long now) {
                 render();
                 update();
             }
         };
         timer.start();
 
-        createMap();
 
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getImage());
         entities.add(bomberman);
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                bomberman.handleKeyReleased(keyEvent.getCode());
+            }
+        });
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                bomberman.handleKeyPress(keyEvent.getCode());
+            }
+        });
     }
     //khong dung ham nay, doc file config txt
     public void createMap() {
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
-                Entity object;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
-                    object = new Wall(i, j, Sprite.wall.getFxImage());
+        //TODO
+        //level de test, can them level
+        level =1;
+        String fileLink=null;
+        if(level == 1){
+            fileLink="res/levels/level1.txt";
+        }
+        map levelMap = new map();
+        levelMap.loadMap(fileLink);
+        WIDTH=levelMap.getW();
+        HEIGHT=levelMap.getH();
+        for(int i=0;i<levelMap.getH();i++){
+            for(int j=0;j<levelMap.getW();j++){
+                //System.out.print(levelMap.getCharacter(i,j));
+                char chr = levelMap.getCharacter(i,j);
+                switch (chr){
+                    case '*':
+                        Brick brick = new Brick(j,i,Sprite.brick.getFxImage());
+                        entities.add(brick);
+                        break;
+                    case '#':
+                        Wall wall = new Wall(j,i,Sprite.wall.getFxImage());
+                        stillObjects.add(wall);
+                        break;
+                    case 'x':
+                        Portal portal = new Portal(j,i,Sprite.brick.getFxImage());
+                        entities.add(portal);
+                        break;
+                    case 'b':
+                        itemBomb bombItem = new itemBomb(j,i,Sprite.brick.getFxImage());
+                        entities.add(bombItem);
+                        break;
+                    default:
+                        Grass grass = new Grass(j,i,Sprite.grass.getFxImage());
+                        stillObjects.add(grass);
+                        break;
                 }
-                else {
-                    object = new Grass(i, j, Sprite.grass.getFxImage());
-                }
-                stillObjects.add(object);
             }
+            //System.out.println();
         }
     }
 
@@ -88,3 +163,4 @@ public class BombermanGame extends Application {
         entities.forEach(g -> g.render(gc));
     }
 }
+
