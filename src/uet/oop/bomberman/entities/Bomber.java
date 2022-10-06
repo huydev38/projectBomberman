@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.graphics.Sprite;
 
-public class Bomber extends Entity {
+public class Bomber extends AnimatedObject {
 
     private int bombCount=1;
     private int speed=1;
@@ -53,7 +53,8 @@ public class Bomber extends Entity {
         return speed;
     }
     public void moving(){
-        if(moveLEFT) {x -= speed;
+        if(moveLEFT) {
+            x -= speed;
         setImg((Sprite.movingSprite(Sprite.player_left,Sprite.player_left_1,Sprite.player_left_2,getX(),15)).getImage());
         }
         if(moveRIGHT) {
@@ -72,43 +73,58 @@ public class Bomber extends Entity {
 
         }
     }
-    public void handleKeyPress(KeyCode k){
+    public void handleKeyPress(KeyCode k,char [][]mapMatrix){
 
         switch(k){
             case W:
-                moveUP=true;
+                if(canMove(mapMatrix,x,y)){
+                    moveUP=true;
+                }
                 break;
             case A:
-                moveLEFT=true;
+                if(canMove(mapMatrix,x,y)){
+                    moveLEFT=true;
+                }
                 break;
             case S:
-                moveDOWN=true;
+                if(canMove(mapMatrix,x,y)){
+                    moveDOWN=true;
+                }
                 break;
             case D:
-                moveRIGHT=true;
+                if(canMove(mapMatrix,x,y)){
+                    moveRIGHT=true;
+                }
                 break;
+            default:
+                moveDOWN=false;
+                moveRIGHT=false;
+                moveUP=false;
+                moveLEFT=false;
         }
     }
     public void handleKeyReleased(KeyCode k){
         switch(k){
             case W:
                 moveUP=false;
-                y+=speed;
                 break;
             case A:
                 moveLEFT=false;
-                x-=speed;
                 break;
             case S:
                 moveDOWN=false;
-                y-=speed;
                 break;
             case D:
                 moveRIGHT=false;
-                x+=speed;
                 break;
         }
     }
+
+    @Override
+    public boolean canMove(char[][] mapMatrix, int xm, int ym) {
+        return false;
+    }
+
     @Override
     public void update() {
         moving();

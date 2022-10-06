@@ -25,10 +25,7 @@ public class BombermanGame extends Application {
     public int HEIGHT=50;
 
     public  int level;
-    
-    //so nay lay theo file config
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
+    map levelMap = new map();
     
     private GraphicsContext gc;
     private Canvas canvas;
@@ -105,7 +102,7 @@ public class BombermanGame extends Application {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                bomberman.handleKeyPress(keyEvent.getCode());
+                bomberman.handleKeyPress(keyEvent.getCode(),levelMap.getMapMatrix());
             }
         });
     }
@@ -118,7 +115,7 @@ public class BombermanGame extends Application {
         if(level == 1){
             fileLink="res/levels/level1.txt";
         }
-        map levelMap = new map();
+
         levelMap.loadMap(fileLink);
         WIDTH=levelMap.getW();
         HEIGHT=levelMap.getH();
@@ -149,7 +146,6 @@ public class BombermanGame extends Application {
                         break;
                 }
             }
-            //System.out.println();
         }
     }
 
