@@ -20,8 +20,8 @@ import java.util.List;
 public class BombermanGame extends Application {
     Stage window;
     Scene sceneMenu;
-    public int WIDTH=20;
-    public int HEIGHT=20;
+    public int WIDTH=50;
+    public int HEIGHT=50;
 
     public  int level;
 
@@ -45,7 +45,7 @@ public class BombermanGame extends Application {
         Button buttonPlay = new Button("Play");
         Button buttonRanking = new Button("Ranking Board");
         VBox layoutMenu = new VBox();
-        sceneMenu = new Scene(layoutMenu, 300,300);
+        sceneMenu = new Scene(layoutMenu, 1080,400);
         window.setScene(sceneMenu);
         layoutMenu.getChildren().addAll(buttonPlay, buttonRanking);
         buttonPlay.setOnAction(event ->{
@@ -81,7 +81,7 @@ public class BombermanGame extends Application {
         stage.show();
         AnimationTimer timer = new AnimationTimer() {
             @Override
-            public void handle(long l) {
+            public void handle(long now) {
                 render();
                 update();
             }
