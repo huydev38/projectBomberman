@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import uet.oop.bomberman.ConvertCordinate;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomber extends AnimatedObject {
@@ -13,9 +14,12 @@ public class Bomber extends AnimatedObject {
     private boolean moveDOWN;
     private boolean moveRIGHT;
     private boolean moveLEFT;
+    private char[][] mapMatrix;
 
-    public Bomber(int x, int y, Image img) {
+
+    public Bomber(int x, int y, Image img, char[][]mapMatrix) {
         super( x, y, img);
+        this.mapMatrix=mapMatrix;
     }
 
     @Override
@@ -32,6 +36,7 @@ public class Bomber extends AnimatedObject {
     public int getY(){
         return y;
     }
+
 
     public void setBombCount(int bombCount) {
         this.bombCount = bombCount;
@@ -54,53 +59,44 @@ public class Bomber extends AnimatedObject {
     }
     public void moving(){
         if(moveLEFT) {
-            x -= speed;
-        setImg((Sprite.movingSprite(Sprite.player_left,Sprite.player_left_1,Sprite.player_left_2,getX(),15)).getImage());
+            if (canMove(mapMatrix, x-speed, y+2,x-speed, y+26)) {
+                x -= speed;
+                setImg((Sprite.movingSprite(Sprite.player_left, Sprite.player_left_1, Sprite.player_left_2, getX(), 15)).getImage());
+            }
         }
         if(moveRIGHT) {
-            x += speed;
-            setImg((Sprite.movingSprite(Sprite.player_right,Sprite.player_right_1,Sprite.player_right_2,getX(),15)).getImage());
-
+            if(canMove(mapMatrix,x+speed+26,y+2, x+speed+26, y+26)) {
+                x += speed;
+                setImg((Sprite.movingSprite(Sprite.player_right, Sprite.player_right_1, Sprite.player_right_2, getX(), 15)).getImage());
+            }
         }
         if(moveUP) {
-            y -= speed;
-            setImg((Sprite.movingSprite(Sprite.player_up,Sprite.player_up_1,Sprite.player_up_2,getY(),15)).getImage());
-
+            if(canMove(mapMatrix,x+2,y-speed,x+26,y-speed)) {
+                y -= speed;
+                setImg((Sprite.movingSprite(Sprite.player_up, Sprite.player_up_1, Sprite.player_up_2, getY(), 15)).getImage());
+            }
         }
         if(moveDOWN){
-            y+=speed;
-            setImg((Sprite.movingSprite(Sprite.player_down,Sprite.player_down_1,Sprite.player_down_2,getY(),15)).getImage());
-
+            if(canMove(mapMatrix,x+2,y+speed+25,x+26,y+speed+26)) {
+                y += speed;
+                setImg((Sprite.movingSprite(Sprite.player_down, Sprite.player_down_1, Sprite.player_down_2, getY(), 15)).getImage());
+            }
         }
     }
-    public void handleKeyPress(KeyCode k,char [][]mapMatrix){
-
+    public void handleKeyPress(KeyCode k){
         switch(k){
             case W:
-                if(canMove(mapMatrix,x,y)){
-                    moveUP=true;
-                }
+                moveUP=true;
                 break;
             case A:
-                if(canMove(mapMatrix,x,y)){
-                    moveLEFT=true;
-                }
+                moveLEFT=true;
                 break;
             case S:
-                if(canMove(mapMatrix,x,y)){
-                    moveDOWN=true;
-                }
+                moveDOWN=true;
                 break;
             case D:
-                if(canMove(mapMatrix,x,y)){
-                    moveRIGHT=true;
-                }
+                moveRIGHT=true;
                 break;
-            default:
-                moveDOWN=false;
-                moveRIGHT=false;
-                moveUP=false;
-                moveLEFT=false;
         }
     }
     public void handleKeyReleased(KeyCode k){
@@ -121,8 +117,15 @@ public class Bomber extends AnimatedObject {
     }
 
     @Override
-    public boolean canMove(char[][] mapMatrix, int xm, int ym) {
-        return false;
+    public boolean canMove(char[][] mapMatrix, int xm, int ym, int xn, int yn) {
+        xm= ConvertCordinate.PixelToTile(xm);
+        ym= ConvertCordinate.PixelToTile(ym);
+        xn=ConvertCordinate.PixelToTile(xn);
+        yn=ConvertCordinate.PixelToTile(yn);
+        if(mapMatrix[ym][xm]=='*'||mapMatrix[ym][xm]=='#'||mapMatrix[yn][xn]=='*'||mapMatrix[yn][xn]=='#'){
+            return false;
+        }
+        return true;
     }
 
     @Override
