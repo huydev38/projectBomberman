@@ -12,7 +12,7 @@ public abstract class AnimatedObject extends Entity{
     public void update() {
 
     }
-    public abstract boolean canMove(char [][]mapMatrix, int xm, int ym, int xn, int yn);
+    public abstract boolean canMove(char [][]mapMatrix, int x, int y, String direction);
 
 
 }
