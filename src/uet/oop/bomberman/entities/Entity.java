@@ -13,6 +13,8 @@ public abstract class Entity {
 
     protected Image img;
 
+    private char[][] mapMatrix;
+
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
     public Entity( int xUnit, int yUnit, Image img) {
         this.x = xUnit * Sprite.SCALED_SIZE;

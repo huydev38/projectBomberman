@@ -70,7 +70,6 @@ public class BombermanGame extends Application {
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
-
         // Tao root container
         Group root = new Group();
         root.getChildren().add(canvas);
@@ -84,14 +83,14 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                render();
                 update();
+                render();
             }
         };
         timer.start();
 
 
-        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getImage());
+        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getImage(), levelMap.getMapMatrix());
         entities.add(bomberman);
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
@@ -102,7 +101,7 @@ public class BombermanGame extends Application {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                bomberman.handleKeyPress(keyEvent.getCode(),levelMap.getMapMatrix());
+                bomberman.handleKeyPress(keyEvent.getCode());
             }
         });
     }
