@@ -13,6 +13,6 @@ public abstract class AnimatedObject extends Entity{
 
     }
     public abstract boolean canMove(char [][]mapMatrix, int x, int y, String direction);
-
+    public abstract void updateTile(char [][]mapMatrix, int tx, int ty);
 
 }

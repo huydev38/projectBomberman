@@ -29,9 +29,19 @@ public class BombermanGame extends Application {
     
     private GraphicsContext gc;
     private Canvas canvas;
-    private List<Entity> entities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
+    private static List<Entity> entities = new ArrayList<>();
+    private static List<Entity> stillObjects = new ArrayList<>();
 
+    public static void removeEntities(Entity e){
+        entities.remove(e);
+    }
+
+    public static void addEntities(Entity e){
+        entities.add(e);
+    }
+    public static List<Entity> getEntities(){
+        return entities;
+    }
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -147,6 +157,7 @@ public class BombermanGame extends Application {
             }
         }
     }
+
 
     public void update() {
         entities.forEach(Entity::update);
