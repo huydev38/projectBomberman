@@ -1,5 +1,4 @@
 package uet.oop.bomberman;
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -25,7 +24,7 @@ public class BombermanGame extends Application {
     public int HEIGHT=50;
 
     public  int level;
-    map levelMap = new map();
+    Map levelMap = new Map();
     
     private GraphicsContext gc;
     private Canvas canvas;
@@ -42,6 +41,10 @@ public class BombermanGame extends Application {
     public static List<Entity> getEntities(){
         return entities;
     }
+
+    public static char[][]mapMatrix;
+    public static int[][] MovableMap;
+    public static char[][]itemMap;
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -77,6 +80,9 @@ public class BombermanGame extends Application {
     }
     public void startGame(Stage stage){
         createMap();
+        mapMatrix= levelMap.getMapMatrix();
+        MovableMap=levelMap.getMovableMap();
+        itemMap=levelMap.getItemMap();
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
@@ -100,7 +106,7 @@ public class BombermanGame extends Application {
         timer.start();
 
 
-        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getImage(), levelMap.getMapMatrix());
+        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getImage());
         entities.add(bomberman);
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
@@ -153,6 +159,19 @@ public class BombermanGame extends Application {
                         Grass grass = new Grass(j,i,Sprite.grass.getFxImage());
                         stillObjects.add(grass);
                         break;
+                }
+            }
+        }
+        for(int i=0;i<levelMap.getH();i++) {
+            for (int j = 0; j < levelMap.getW(); j++) {
+                //System.out.print(levelMap.getCharacter(i,j));
+                char chr = levelMap.getCharacter(i, j);
+                switch (chr) {
+                    case '1':
+                        Balloon balloon = new Balloon(j,i,Sprite.balloom_left1.getImage());
+                        entities.add(balloon);
+                        break;
+                    case '2':
                 }
             }
         }

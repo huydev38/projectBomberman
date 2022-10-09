@@ -9,13 +9,11 @@ import uet.oop.bomberman.graphics.Sprite;
 public class Bomb extends Entity {
     private boolean isExploded = false;
     private int countDownTime = 180*3;
-    private char [][] mapMatrix;
     Bomber bomber;
 
-    public Bomb(int x, int y, Image img, Bomber bomber, char [][] mapMatrix) {
+    public Bomb(int x, int y, Image img, Bomber bomber) {
         super(x, y, img);
         this.bomber = bomber;
-        this.mapMatrix=mapMatrix;
     }
 
     public void countDown() {
@@ -70,16 +68,15 @@ public class Bomb extends Entity {
             //TODO: Create bomb segment
             remove();
             bomber.setBombCount(bomber.getBombCount() + 1);
-            updateTile(mapMatrix, ConvertCordinate.getTileX(x), ConvertCordinate.getTileY(y));
-            isExploded=false;
         }
+        updateTile(ConvertCordinate.getTileX(x), ConvertCordinate.getTileY(y),this.bomber);
     }
 
-    public void updateTile(char[][] mapMatrix, int tx, int ty) {
-        if (isExploded == false) {
-            mapMatrix[ty][tx] = 'o';
+    public void updateTile(int tx, int ty, Bomber bomber1) {
+        if (isExploded == false && (ConvertCordinate.getTileX(bomber1.getX())!=tx||ConvertCordinate.getTileY(bomber1.getY())!=ty)) {
+            BombermanGame.MovableMap[ty][tx] = 0;
         } else {
-            mapMatrix[ty][tx]=' ';
+            BombermanGame.MovableMap[ty][tx]=1;
         }
     }
 }
