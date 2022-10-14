@@ -48,5 +48,6 @@ public abstract class AnimatedObject extends Entity{
         return BombermanGame.mapMatrix[ym][xm] != '*' && BombermanGame.mapMatrix[ym][xm] != '#' && BombermanGame.mapMatrix[yn][xn] != '*' && BombermanGame.mapMatrix[yn][xn] != '#' && BombermanGame.MovableMap[yn][xn] != 0 && BombermanGame.MovableMap[ym][xm] != 0;
     }
     public abstract void updateTile(int tx, int ty);
+    public abstract void die();
 
 }

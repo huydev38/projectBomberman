@@ -28,8 +28,8 @@ public class BombermanGame extends Application {
     
     private GraphicsContext gc;
     private Canvas canvas;
-    private static List<Entity> entities = new ArrayList<>();
-    private static List<Entity> stillObjects = new ArrayList<>();
+    private static  List<Entity> entities = new ArrayList<>();
+    private static  List<Entity> stillObjects = new ArrayList<>();
 
     public static void removeEntities(Entity e){
         entities.remove(e);
@@ -101,6 +101,14 @@ public class BombermanGame extends Application {
             public void handle(long now) {
                 update();
                 render();
+              //  System.out.println(entities.size());
+//         for(int i=0;i< levelMap.getH();i++){
+//                    for(int j=0;j<levelMap.getW();j++){
+//                        System.out.print(itemMap[i][j]);
+//                    }
+//                    System.out.println();
+//                }
+
             }
         };
         timer.start();
@@ -123,7 +131,6 @@ public class BombermanGame extends Application {
     }
     //khong dung ham nay, doc file config txt
     public void createMap() {
-        //TODO
         //level de test, can them level
         level =1;
         String fileLink=null;
@@ -134,6 +141,12 @@ public class BombermanGame extends Application {
         levelMap.loadMap(fileLink);
         WIDTH=levelMap.getW();
         HEIGHT=levelMap.getH();
+        for(int i=0;i<levelMap.getH();i++) {
+            for (int j = 0; j < levelMap.getW(); j++) {
+                Grass grass = new Grass(j,i,Sprite.grass.getImage());
+                stillObjects.add(grass);
+            }
+        }
         for(int i=0;i<levelMap.getH();i++){
             for(int j=0;j<levelMap.getW();j++){
                 //System.out.print(levelMap.getCharacter(i,j));
@@ -155,6 +168,14 @@ public class BombermanGame extends Application {
                         itemBomb bombItem = new itemBomb(j,i,Sprite.brick.getFxImage());
                         entities.add(bombItem);
                         break;
+                    case 's':
+                        itemSpeed speedItem = new itemSpeed(j,i,Sprite.brick.getImage());
+                        entities.add(speedItem);
+                        break;
+                    case 'f':
+                        itemFlame flameItem = new itemFlame(j,i,Sprite.brick.getImage());
+                        entities.add(flameItem);
+                        break;
                     default:
                         Grass grass = new Grass(j,i,Sprite.grass.getFxImage());
                         stillObjects.add(grass);
@@ -172,6 +193,7 @@ public class BombermanGame extends Application {
                         entities.add(balloon);
                         break;
                     case '2':
+
                 }
             }
         }
@@ -179,7 +201,9 @@ public class BombermanGame extends Application {
 
 
     public void update() {
-        entities.forEach(Entity::update);
+        for(int i=0;i<entities.size();i++){
+            entities.get(i).update();
+        }
     }
 
     public void render() {

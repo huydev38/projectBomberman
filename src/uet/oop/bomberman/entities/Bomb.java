@@ -8,27 +8,33 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomb extends Entity {
     private boolean isExploded = false;
-    private int countDownTime = 180*3;
+    private int countDownTime = 90*3;
     Bomber bomber;
+    private int LengthDefault;
 
     public Bomb(int x, int y, Image img, Bomber bomber) {
         super(x, y, img);
         this.bomber = bomber;
+        this.LengthDefault=bomber.getBOMBLENGTHDEFAULT();
     }
 
     public void countDown() {
         if(countDownTime!=0) {
             countDownTime--;
         }
-        if (countDownTime == 180*3) {
+        if (countDownTime == 90*3) {
             setImg(Sprite.bomb_2.getImage());
         }
-        if (countDownTime == 120*3) {
+        if (countDownTime == 60*3) {
             setImg(Sprite.bomb_1.getImage());
         }
-        if (countDownTime == 60*3) {
+        if (countDownTime == 30*3) {
             setImg(Sprite.bomb.getImage());
         }
+    }
+
+    public void setCountDownTime(int countDownTime) {
+        this.countDownTime = countDownTime;
     }
 
     @Override
@@ -65,11 +71,13 @@ public class Bomb extends Entity {
 
     public void setExploded() {
         if (checkExploded()) {
-            //TODO: Create bomb segment
+            BombSegment bombSegment = new BombSegment(ConvertCordinate.getTileX(x),ConvertCordinate.getTileY(y),Sprite.bomb_exploded.getImage(),LengthDefault);
+            BombermanGame.addEntities(bombSegment);
+            bomber.setBombCount(bomber.getBombCount() -1);
             remove();
-            bomber.setBombCount(bomber.getBombCount() + 1);
         }
         updateTile(ConvertCordinate.getTileX(x), ConvertCordinate.getTileY(y),this.bomber);
+
     }
 
     public void updateTile(int tx, int ty, Bomber bomber1) {

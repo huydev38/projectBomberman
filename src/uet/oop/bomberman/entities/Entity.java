@@ -28,8 +28,16 @@ public abstract class Entity {
     public static Entity getEntity(int x,int y){
         x= ConvertCordinate.getTileX(x);
         y=ConvertCordinate.getTileY(y);
-        for(int i=0;i< BombermanGame.getEntities().size();i++){
+        for(int i=0;i<BombermanGame.getEntities().size();i++){
             if(BombermanGame.getEntities().get(i).getX()/Sprite.SCALED_SIZE==x&&BombermanGame.getEntities().get(i).getY()/Sprite.SCALED_SIZE==y){
+                return BombermanGame.getEntities().get(i);
+            }
+        }
+        return null;
+    }
+    public static Entity getEntityFromTile(int tx, int ty){
+        for(int i=0;i<BombermanGame.getEntities().size();i++){
+            if(ConvertCordinate.getTileX(BombermanGame.getEntities().get(i).getX())==tx&&ConvertCordinate.getTileY(BombermanGame.getEntities().get(i).getY())==ty){
                 return BombermanGame.getEntities().get(i);
             }
         }

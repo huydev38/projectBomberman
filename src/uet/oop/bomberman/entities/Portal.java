@@ -1,11 +1,13 @@
 package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.ConvertCordinate;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Portal extends Entity {
-    boolean isRevealed;
-    boolean isOpened;
+    boolean isRevealed = false;
+    boolean isOpened = false;
     public Portal(int x, int y, Image img) {
         super(x, y, img);
     }
@@ -27,8 +29,8 @@ public class Portal extends Entity {
     public void update(){
         if(isRevealed){
             this.setImg(Sprite.portal.getFxImage());
+            BombermanGame.MovableMap[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)]=1;
         }
-        //TODO
         /*
         Neu open thi qua lv
          */

@@ -5,15 +5,16 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.ConvertCordinate;
 import uet.oop.bomberman.graphics.Sprite;
 
-public class itemBomb extends Item{
+
+public class itemFlame extends Item{
+    private boolean isTaken = false;
+    private boolean isReveal = false;
     Bomber bomber;
-    private boolean isTaken=false;
-    private boolean isRevealed=false;
-    private int CountDownTime=2000;
-    public itemBomb(int x, int y, Image img) {
-        super(x, y, img);
+    private int CountDownTime = 2000;
+    public itemFlame(int x, int y, Image img){
+        super(x,y,img);
         isTaken=false;
-        isRevealed=false;
+        isReveal=false;
     }
 
     @Override
@@ -21,20 +22,20 @@ public class itemBomb extends Item{
         super.setImg(img);
     }
 
-    public void setRevealed(boolean revealed) {
-        isRevealed = revealed;
-    }
-
     public void setTaken(boolean taken) {
         isTaken = taken;
+    }
+
+    public void setRevealed(boolean reveal) {
+        isReveal = reveal;
     }
 
     @Override
     public void addToBomber(Bomber bomber) {
         isTaken=true;
-        //them 1 bomb
         this.bomber=bomber;
         BombermanGame.itemMap[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)]=' ';
+        //them 1 bomb
     }
     public void countdown(){
         if(isTaken==true&&CountDownTime>0){
@@ -42,7 +43,7 @@ public class itemBomb extends Item{
         }
         if(CountDownTime==0){
             isTaken=false;
-            bomber.setBombMax(1);
+            bomber.setBOMBLENGTHDEFAULT(1);
             remove();
         }
     }
@@ -51,14 +52,16 @@ public class itemBomb extends Item{
     }
     @Override
     public void update() {
-        if(isRevealed){
-            setImg(Sprite.powerup_bombs.getFxImage());
+        if(isReveal){
+            setImg(Sprite.powerup_flames.getFxImage());
             BombermanGame.MovableMap[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)]=1;
         }
         if(isTaken){
             setImg(Sprite.grass.getFxImage());
-            bomber.setBombMax(2);
+            bomber.setBOMBLENGTHDEFAULT(2);
         }
         countdown();
     }
+
+
 }
