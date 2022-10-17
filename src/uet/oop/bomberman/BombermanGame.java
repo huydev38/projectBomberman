@@ -8,11 +8,19 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import java.io.FileInputStream;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,15 +62,29 @@ public class BombermanGame extends Application {
     Can them background, can giua cho nut, them scene chon level sau sceneMenu
      */
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
         window=stage;
         window.setTitle("BomberMan");
         Button buttonPlay = new Button("Play");
         Button buttonRanking = new Button("Ranking Board");
-        VBox layoutMenu = new VBox();
-        sceneMenu = new Scene(layoutMenu, 1080,400);
+        StackPane layoutMenu = new StackPane();
+        sceneMenu = new Scene(layoutMenu, 600,400);
+
+        //Menu
+        Image image = new Image(getClass().getResourceAsStream("/menu/menu.png"));
+        ImageView imageView = new ImageView(image);
+        imageView.setX(0);
+        imageView.setY(0);
+        imageView.setFitHeight(400);
+        imageView.setFitWidth(1080);
+        imageView.setPreserveRatio(true);
+
         window.setScene(sceneMenu);
-        layoutMenu.getChildren().addAll(buttonPlay, buttonRanking);
+        layoutMenu.getChildren().addAll(imageView, buttonPlay);
+        buttonPlay.setTranslateY(130);
+
+        buttonPlay.setMaxHeight(80);
+        buttonPlay.setMaxWidth(400);
         buttonPlay.setOnAction(event ->{
             startGame(window);
         });
