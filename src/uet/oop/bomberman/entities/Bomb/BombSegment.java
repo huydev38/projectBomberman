@@ -1,7 +1,14 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.Bomb;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.*;
+import uet.oop.bomberman.entities.Item.itemBomb;
+import uet.oop.bomberman.entities.Item.itemFlame;
+import uet.oop.bomberman.entities.Item.itemSpeed;
+import uet.oop.bomberman.entities.MapEntities.Brick;
+import uet.oop.bomberman.entities.MapEntities.Portal;
+import uet.oop.bomberman.entities.MovingEntities.AnimatedObject;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
@@ -18,14 +25,15 @@ public class BombSegment extends Entity {
     private int LengthUp;
     private int LengthDown;
     private int LengthDefault = 1;
-    private int FlameTime = 30 * 3;
+    private int FlameTime = 30;
 
     public BombSegment(int x, int y, Image image, int LengthDefault) {
         super(x, y, image);
         this.centerX = x;
         this.centerY = y;
-        SetFlame();
         this.LengthDefault=LengthDefault;
+        SetFlame();
+
     }
 
     public void setLength() {
@@ -34,7 +42,7 @@ public class BombSegment extends Entity {
 
     public void calculate() {
         for (int i = 1; i <= LengthDefault; i++) {
-            if (BombermanGame.mapMatrix[centerY][centerX - i] == '#') {
+            if (BombermanGame.mapMatrix[centerY][centerX - i] == '#' ) {
                 LengthLeft = i - 1;
                 break;
             }
@@ -61,25 +69,25 @@ public class BombSegment extends Entity {
 
     public void calculateforDisplay() {
         for (int i = 1; i <= LengthDefault; i++) {
-            if (BombermanGame.mapMatrix[centerY][centerX - i] == '*' || BombermanGame.mapMatrix[centerY][centerX - i] == '#') {
+            if (BombermanGame.mapMatrix[centerY][centerX - i] == '*' || BombermanGame.mapMatrix[centerY][centerX - i] == '#' || BombermanGame.itemMap[centerY][centerX - i]!=' ') {
                 LengthLeft = i - 1;
                 break;
             }
         }
         for (int i = 1; i <= LengthDefault; i++) {
-            if (BombermanGame.mapMatrix[centerY][centerX + i] == '*' || BombermanGame.mapMatrix[centerY][centerX + i] == '#') {
+            if (BombermanGame.mapMatrix[centerY][centerX + i] == '*' || BombermanGame.mapMatrix[centerY][centerX + i] == '#'||BombermanGame.itemMap[centerY][centerX+i]!=' ') {
                 LengthRight = i - 1;
                 break;
             }
         }
         for (int i = 1; i <= LengthDefault; i++) {
-            if (BombermanGame.mapMatrix[centerY - i][centerX] == '*' || BombermanGame.mapMatrix[centerY - i][centerX] == '#') {
+            if (BombermanGame.mapMatrix[centerY - i][centerX] == '*' || BombermanGame.mapMatrix[centerY - i][centerX] == '#'||BombermanGame.itemMap[centerY-i][centerX]!=' ') {
                 LengthUp = i - 1;
                 break;
             }
         }
         for (int i = 1; i <= LengthDefault; i++) {
-            if (BombermanGame.mapMatrix[centerY + i][centerX] == '*' || BombermanGame.mapMatrix[centerY + i][centerX] == '#') {
+            if (BombermanGame.mapMatrix[centerY + i][centerX] == '*' || BombermanGame.mapMatrix[centerY + i][centerX] == '#'||BombermanGame.itemMap[centerY+i][centerX]!=' ') {
                 LengthDown = i - 1;
                 break;
             }
@@ -239,7 +247,7 @@ public class BombSegment extends Entity {
     }
 
     public void display() {
-        if (FlameTime == 10 * 3) {
+        if (FlameTime == 10) {
             setImg(Sprite.bomb_exploded2.getImage());
             if (flamesLEFT.size() > 0) {
                 for (int i = 0; i < flamesLEFT.size(); i++) {
@@ -267,7 +275,7 @@ public class BombSegment extends Entity {
                 flamesDOWN.get(flamesDOWN.size() - 1).setImg(Sprite.explosion_vertical_down_last2.getImage());
             }
         }
-        if (FlameTime == 20 * 3) {
+        if (FlameTime == 20) {
             setImg(Sprite.bomb_exploded1.getImage());
             if (flamesLEFT.size() > 0) {
                 for (int i = 0; i < flamesLEFT.size(); i++) {

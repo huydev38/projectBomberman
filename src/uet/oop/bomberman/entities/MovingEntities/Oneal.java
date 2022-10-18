@@ -1,12 +1,11 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.MovingEntities;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.ConvertCordinate;
 import uet.oop.bomberman.graphics.Sprite;
 
-
-public class Balloon extends AnimatedObject {
+public class Oneal extends AnimatedObject {
     private int speed = 1;
     private boolean isAlive = true;
     private int dieTime = 180;
@@ -14,12 +13,13 @@ public class Balloon extends AnimatedObject {
     String currentMove = "LEFT";
     int i = 0;
 
-    public Balloon(int x, int y, Image img) {
+    public Oneal(int x, int y, Image img) {
         super(x, y, img);
     }
 
     @Override
     public void update() {
+        speed=(i+2)%3+1;
         moving();
         dieAnimation();
     }
@@ -27,7 +27,7 @@ public class Balloon extends AnimatedObject {
     @Override
     public void updateTile(int tx, int ty) {
         BombermanGame.mapMatrix[ConvertCordinate.getTileY(ty)][ConvertCordinate.getTileX(tx)] = ' ';
-        BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] = '1';
+        BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] = '2';
     }
 
     public String getNextDirection() {
@@ -48,11 +48,11 @@ public class Balloon extends AnimatedObject {
             switch (nextMove) {
                 case "LEFT":
                     this.x -= speed;
-                    setImg(Sprite.movingSprite(Sprite.balloom_left1, Sprite.balloom_left2, Sprite.balloom_left3, x, 15).getImage());
+                    setImg(Sprite.movingSprite(Sprite.oneal_left1, Sprite.oneal_left2, Sprite.oneal_left3, x, 15).getImage());
                     break;
                 case "RIGHT":
                     this.x += speed;
-                    setImg(Sprite.movingSprite(Sprite.balloom_right1, Sprite.balloom_right2, Sprite.balloom_right3, x, 15).getImage());
+                    setImg(Sprite.movingSprite(Sprite.oneal_right1, Sprite.oneal_right2, Sprite.oneal_right3, x, 15).getImage());
                     break;
             }
             updateTile(tempX, tempY);
@@ -76,12 +76,11 @@ public class Balloon extends AnimatedObject {
     void dieAnimation() {
         if (isAlive == false) {
             dieTime--;
-            setImg(Sprite.balloom_dead.getImage());
+            setImg(Sprite.oneal_dead.getImage());
         }
         if(dieTime==0){
             remove();
         }
 
     }
-
 }

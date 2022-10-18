@@ -1,10 +1,11 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.MovingEntities;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.ConvertCordinate;
+import uet.oop.bomberman.entities.Entity;
 
-public abstract class AnimatedObject extends Entity{
+public abstract class AnimatedObject extends Entity {
 
     public AnimatedObject(int x, int y, Image img) {
         super( x, y, img);

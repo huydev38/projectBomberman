@@ -1,12 +1,14 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.Item;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.ConvertCordinate;
+import uet.oop.bomberman.entities.Item.Item;
+import uet.oop.bomberman.entities.MovingEntities.Bomber;
 import uet.oop.bomberman.graphics.Sprite;
 
 
-public class itemFlame extends Item{
+public class itemFlame extends Item {
     private boolean isTaken = false;
     private boolean isReveal = false;
     Bomber bomber;
@@ -27,6 +29,7 @@ public class itemFlame extends Item{
     }
 
     public void setRevealed(boolean reveal) {
+        BombermanGame.MovableMap[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)]=1;
         isReveal = reveal;
     }
 
@@ -54,7 +57,6 @@ public class itemFlame extends Item{
     public void update() {
         if(isReveal){
             setImg(Sprite.powerup_flames.getFxImage());
-            BombermanGame.MovableMap[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)]=1;
         }
         if(isTaken){
             setImg(Sprite.grass.getFxImage());

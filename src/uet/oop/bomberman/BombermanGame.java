@@ -1,16 +1,38 @@
 package uet.oop.bomberman;
+
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.*;
+import javafx.util.Duration;
+import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.Item.itemBomb;
+import uet.oop.bomberman.entities.Item.itemFlame;
+import uet.oop.bomberman.entities.Item.itemSpeed;
+import uet.oop.bomberman.entities.MapEntities.Brick;
+import uet.oop.bomberman.entities.MapEntities.Grass;
+import uet.oop.bomberman.entities.MapEntities.Portal;
+import uet.oop.bomberman.entities.MapEntities.Wall;
+import uet.oop.bomberman.entities.MovingEntities.Balloon;
+import uet.oop.bomberman.entities.MovingEntities.Bomber;
+import uet.oop.bomberman.entities.MovingEntities.Oneal;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
@@ -20,10 +42,16 @@ public class BombermanGame extends Application {
 
     Stage window;
     Scene sceneMenu;
+    private final int startTime = 300;
+    private Integer seconds=startTime;
+
+
     public int WIDTH=50;
     public int HEIGHT=50;
 
     public  int level;
+    public static int score = 0;
+    public static int bombCount =1;
     Map levelMap = new Map();
     
     private GraphicsContext gc;
@@ -45,7 +73,10 @@ public class BombermanGame extends Application {
     public static char[][]mapMatrix;
     public static int[][] MovableMap;
     public static char[][]itemMap;
+    Label Score = new Label();
+    Label BombCount = new Label();
 
+    Group root = new Group();
     public static void main(String[] args) {
         Application.launch(args);
     }
@@ -84,12 +115,23 @@ public class BombermanGame extends Application {
         MovableMap=levelMap.getMovableMap();
         itemMap=levelMap.getItemMap();
         // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * (HEIGHT));
         gc = canvas.getGraphicsContext2D();
         // Tao root container
-        Group root = new Group();
-        root.getChildren().add(canvas);
 
+        root.getChildren().add(canvas);
+        HBox layout = new HBox();
+
+        root.getChildren().add(layout);
+        layout.getChildren().add(BombCount);
+        layout.getChildren().add(Score);
+
+        layout.setAlignment(Pos.TOP_CENTER);
+        layout.setAlignment(Pos.BASELINE_CENTER);
+        layout.setSpacing(200);
+        displayScore();
+        doTime(layout);
+        displayBombCount();
         // Tao scene
         Scene scene = new Scene(root);
 
@@ -128,6 +170,44 @@ public class BombermanGame extends Application {
                 bomberman.handleKeyPress(keyEvent.getCode());
             }
         });
+    }
+    public void displayBombCount(){
+        BombCount.setTextFill(Color.WHITE);
+        BombCount.setFont(Font.font("Comic Sans MS",FontWeight.BOLD,24));
+        BombCount.setLayoutY(0);
+        BombCount.setPadding(Insets.EMPTY);
+        BombCount.setText("Bomb: " + bombCount);
+
+    }
+    public void displayScore(){
+
+        Score.setTextFill(Color.WHITE);
+        Score.setFont(Font.font("Comic Sans MS",FontWeight.BOLD,24));
+        Score.setText("SCORE: " + score);
+    }
+    public void doTime(HBox layout){
+        Label TimerDisplay = new Label();
+        TimerDisplay.setTextFill(Color.WHITE);
+        TimerDisplay.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 24));
+        TimerDisplay.setText("TIME: " + seconds.toString());
+        layout.getChildren().add(TimerDisplay);
+        Timeline time = new Timeline();
+        time.setCycleCount(Timeline.INDEFINITE);
+        if(time!=null){
+            time.stop();
+        }
+        KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                TimerDisplay.setText("TIME: "+seconds.toString());
+                seconds--;
+                if(seconds<=0){
+                    time.stop();
+                }
+            }
+        });
+        time.getKeyFrames().add(frame);
+        time.playFromStart();
     }
     //khong dung ham nay, doc file config txt
     public void createMap() {
@@ -193,6 +273,8 @@ public class BombermanGame extends Application {
                         entities.add(balloon);
                         break;
                     case '2':
+                        Oneal oneal = new Oneal(j,i,Sprite.oneal_left1.getImage());
+                        entities.add(oneal);
 
                 }
             }
@@ -201,6 +283,8 @@ public class BombermanGame extends Application {
 
 
     public void update() {
+        displayScore();
+        displayBombCount();
         for(int i=0;i<entities.size();i++){
             entities.get(i).update();
         }
