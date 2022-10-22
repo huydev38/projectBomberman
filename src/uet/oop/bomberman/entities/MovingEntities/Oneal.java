@@ -19,16 +19,20 @@ public class Oneal extends AnimatedObject {
 
     @Override
     public void update() {
-        speed=(i+2)%3+1;
+        speed = (i + 2) % 3 + 1;
         moving();
         dieAnimation();
     }
 
     @Override
     public void updateTile(int tx, int ty) {
-        BombermanGame.mapMatrix[ConvertCordinate.getTileY(ty)][ConvertCordinate.getTileX(tx)] = ' ';
+        if (BombermanGame.mapMatrix[ConvertCordinate.getTileY(ty)][ConvertCordinate.getTileX(tx)] != 1 && BombermanGame.mapMatrix[ConvertCordinate.getTileY(ty)][ConvertCordinate.getTileX(tx)] != 3){
+
+            BombermanGame.mapMatrix[ConvertCordinate.getTileY(ty)][ConvertCordinate.getTileX(tx)] = ' ';
         BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] = '2';
     }
+
+}
 
     public String getNextDirection() {
         if (canMove(x, y, currentMove, this.speed)) {
@@ -68,10 +72,13 @@ public class Oneal extends AnimatedObject {
     public void die() {
         isAlive = false;
         speed=0;
+
         BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)]=' ';
     }
     public void remove(){
         BombermanGame.removeEntities(this);
+        BombermanGame.score+=20;
+        BombermanGame.enemyCount-=1;
     }
     void dieAnimation() {
         if (isAlive == false) {

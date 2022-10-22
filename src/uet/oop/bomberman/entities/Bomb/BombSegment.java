@@ -326,6 +326,7 @@ public class BombSegment extends Entity {
 
     @Override
     public void update() {
+        checkCollide();
         display();
     }
 

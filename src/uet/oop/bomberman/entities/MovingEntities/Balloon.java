@@ -26,8 +26,10 @@ public class Balloon extends AnimatedObject {
 
     @Override
     public void updateTile(int tx, int ty) {
-        BombermanGame.mapMatrix[ConvertCordinate.getTileY(ty)][ConvertCordinate.getTileX(tx)] = ' ';
-        BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] = '1';
+        if (BombermanGame.mapMatrix[ConvertCordinate.getTileY(ty)][ConvertCordinate.getTileX(tx)] != 2 && BombermanGame.mapMatrix[ConvertCordinate.getTileY(ty)][ConvertCordinate.getTileX(tx)] != 3) {
+            BombermanGame.mapMatrix[ConvertCordinate.getTileY(ty)][ConvertCordinate.getTileX(tx)] = ' ';
+            BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] = '1';
+        }
     }
 
     public String getNextDirection() {
@@ -72,6 +74,9 @@ public class Balloon extends AnimatedObject {
     }
     public void remove(){
         BombermanGame.removeEntities(this);
+        BombermanGame.enemyCount-=1;
+        BombermanGame.score+=10;
+
     }
     void dieAnimation() {
         if (isAlive == false) {

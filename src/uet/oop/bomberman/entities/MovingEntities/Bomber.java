@@ -168,6 +168,10 @@ public class Bomber extends AnimatedObject {
         }
     }
 
+    public boolean isAlive() {
+        return isAlive;
+    }
+
     @Override
     public void update() {
         moving();
@@ -189,7 +193,6 @@ public class Bomber extends AnimatedObject {
     public void die() {
         speed = 0;
         isAlive = false;
-
     }
 
     void dieAnimation() {
@@ -207,6 +210,8 @@ public class Bomber extends AnimatedObject {
         }
         if (dieTime == 0) {
             BombermanGame.removeEntities(this);
+            BombermanGame.endGame=true;
+            BombermanGame.isAlive=false;
         }
     }
 
@@ -217,7 +222,12 @@ public class Bomber extends AnimatedObject {
         } else if (BombermanGame.itemMap[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] != ' ') {
             updateTile(tempX, tempY);
             Item.getItem(x, y).addToBomber(this);
-        } else if (BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] != 'x') {
+
+        }
+        else if (BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] == 'x') {
+
+        }
+        else if (BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] != 'x') {
             updateTile(tempX, tempY);
         }
     }

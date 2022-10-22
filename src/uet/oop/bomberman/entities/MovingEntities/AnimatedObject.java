@@ -23,24 +23,24 @@ public abstract class AnimatedObject extends Entity {
         switch (direction) {
             case "LEFT":
                 xm = ConvertCordinate.PixelToTile(x - speed);
-                ym = ConvertCordinate.PixelToTile(y + 2);
+                ym = ConvertCordinate.PixelToTile(y + 3 );
                 xn = ConvertCordinate.PixelToTile(x - speed);
                 yn = ConvertCordinate.PixelToTile(y + 26);
                 break;
             case "RIGHT":
                 xm = ConvertCordinate.PixelToTile(x + speed + 26);
-                ym = ConvertCordinate.PixelToTile(y + 2);
+                ym = ConvertCordinate.PixelToTile(y + 3);
                 xn = ConvertCordinate.PixelToTile(x + speed + 26);
                 yn = ConvertCordinate.PixelToTile(y + 26);
                 break;
             case "UP":
-                xm = ConvertCordinate.PixelToTile(x + 2);
+                xm = ConvertCordinate.PixelToTile(x + 3);
                 ym = ConvertCordinate.PixelToTile(y - speed);
                 xn = ConvertCordinate.PixelToTile(x + 26);
                 yn = ConvertCordinate.PixelToTile(y -speed);
                 break;
             case "DOWN":
-                xm = ConvertCordinate.PixelToTile(x + 2);
+                xm = ConvertCordinate.PixelToTile(x + 3);
                 ym = ConvertCordinate.PixelToTile(y + speed+26);
                 xn = ConvertCordinate.PixelToTile(x + 26);
                 yn = ConvertCordinate.PixelToTile(y + speed+26);

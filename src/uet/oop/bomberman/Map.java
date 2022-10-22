@@ -42,7 +42,7 @@ public class Map {
     public char[][] getItemMap(){
         for(int i=0;i<h;i++){
             for(int j=0;j<w;j++){
-                if(mapMatrix[i][j]=='f'||mapMatrix[i][j]=='b'||mapMatrix[i][j]=='s'){
+                if(mapMatrix[i][j]=='f'||mapMatrix[i][j]=='b'||mapMatrix[i][j]=='s'||mapMatrix[i][j]=='x'){
                     itemMap[i][j]=mapMatrix[i][j];
                 }else{
                     itemMap[i][j]=' ';
