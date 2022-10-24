@@ -50,9 +50,10 @@ public class BombermanGame extends Application {
     Scene sceneEndGame;
     Scene sceneRanking;
     private final int startTime = 300;
-    private Integer seconds = startTime;
+    private Integer seconds;
     AnimationTimer timer;
 
+    Timeline time;
     public static boolean endGame = false;
     public int WIDTH = 50;
     public int HEIGHT = 50;
@@ -86,6 +87,7 @@ public class BombermanGame extends Application {
     Label Score = new Label();
     Label BombCount = new Label();
     public static Sound sound;
+    public static SoundEffect se;
     Group root = new Group();
 
     public static void main(String[] args) {
@@ -171,7 +173,9 @@ public class BombermanGame extends Application {
 
     public void startGame(int level) {
         sound = new Sound();
+        se = new SoundEffect();
         playMusic(9);
+        seconds=startTime;
         Map levelMap = new Map();
         entities.clear();
         stillObjects.clear();
@@ -261,6 +265,7 @@ public class BombermanGame extends Application {
     }
 
     public void displayEndGame() {
+        time.stop();
         root.getChildren().removeAll();
         if (level != 3 && isAlive) {
             level += 1;
@@ -294,7 +299,7 @@ public class BombermanGame extends Application {
         TimerDisplay.setTextFill(BLACK);
         TimerDisplay.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 24));
         TimerDisplay.setText("TIME: " + seconds.toString());
-        Timeline time = new Timeline();
+        time = new Timeline();
         time.setCycleCount(Timeline.INDEFINITE);
         if (time != null) {
             time.stop();
@@ -303,7 +308,7 @@ public class BombermanGame extends Application {
             @Override
             public void handle(ActionEvent event) {
                 TimerDisplay.setText("TIME: " + seconds.toString());
-                seconds--;
+                seconds=seconds-1;
                 if (seconds <= 0) {
                     time.stop();
                 }
@@ -405,13 +410,14 @@ public class BombermanGame extends Application {
         sound.stop();
     }
     public static void playSE(int i){
-        sound.setFile(i);
-        sound.play();
+        se.setFile(i);
+        se.play();
     }
 
     public void detectGameEnd() {
         if (endGame == true || seconds == 0) {
             timer.stop();
+            stopMusic();
             displayEndGame();
         }
     }

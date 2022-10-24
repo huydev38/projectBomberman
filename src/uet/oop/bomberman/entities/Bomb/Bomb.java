@@ -73,6 +73,7 @@ public class Bomb extends Entity {
 
     public void setExploded() {
         if (checkExploded()) {
+
             BombSegment bombSegment = new BombSegment(ConvertCordinate.getTileX(x),ConvertCordinate.getTileY(y),Sprite.bomb_exploded.getImage(),LengthDefault);
             BombermanGame.addEntities(bombSegment);
             bomber.setBombCount(bomber.getBombCount() -1);

@@ -84,6 +84,7 @@ public class Bomber extends AnimatedObject {
                     //if (canMove(mapMatrix, x-speed, y+2,x-speed, y+26)) {
                     x -= speed;
                     isMove = true;
+                   BombermanGame.playSE(0);
                     checkCollide(tempX, tempY);
                     setImg((Sprite.movingSprite(Sprite.player_left, Sprite.player_left_1, Sprite.player_left_2, getX(), 15)).getImage());
                 }
@@ -92,6 +93,8 @@ public class Bomber extends AnimatedObject {
                 if (canMove(x, y, "RIGHT", this.speed)) {
                     //if(canMove(mapMatrix,x+speed+26,y+2, x+speed+26, y+26)) {
                     x += speed;
+                  BombermanGame.playSE(0);
+
                     checkCollide(tempX, tempY);
                     setImg((Sprite.movingSprite(Sprite.player_right, Sprite.player_right_1, Sprite.player_right_2, getX(), 15)).getImage());
                 }
@@ -99,6 +102,8 @@ public class Bomber extends AnimatedObject {
             if (moveUP) {
                 if (canMove(x, y, "UP", this.speed)) {
                     //if(canMove(mapMatrix,x+2,y-speed,x+26,y-speed)) {
+                  BombermanGame.playSE(0);
+
                     y -= speed;
                     checkCollide(tempX, tempY);
                     setImg((Sprite.movingSprite(Sprite.player_up, Sprite.player_up_1, Sprite.player_up_2, getY(), 15)).getImage());
@@ -107,6 +112,8 @@ public class Bomber extends AnimatedObject {
             if (moveDOWN) {
                 if (canMove(x, y, "DOWN", this.speed)) {
                     //if(canMove(mapMatrix,x+2,y+speed+25,x+26,y+speed+26)) {
+                   BombermanGame.playSE(0);
+
                     y += speed;
                     checkCollide(tempX, tempY);
                     setImg((Sprite.movingSprite(Sprite.player_down, Sprite.player_down_1, Sprite.player_down_2, getY(), 15)).getImage());
@@ -159,6 +166,7 @@ public class Bomber extends AnimatedObject {
     //Kiem tra xem co dat bomb chua
     public void detectPlantBomb() {
         if (plantBomb && (this.bombCount < this.bombMax) && bombReloadTime == 20 && isAlive) {
+            BombermanGame.playSE(6);
             Bomb b = new Bomb(ConvertCordinate.getTileX(x), ConvertCordinate.getTileY(y), Sprite.bomb_2.getImage(), this);
             BombermanGame.addEntities(b);
             bombReloadTime = 0;
