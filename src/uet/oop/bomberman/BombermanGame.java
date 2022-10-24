@@ -85,19 +85,16 @@ public class BombermanGame extends Application {
     public static boolean isAlive = true;
     Label Score = new Label();
     Label BombCount = new Label();
-
+    public static Sound sound;
     Group root = new Group();
 
     public static void main(String[] args) {
         Application.launch(args);
     }
 
-    //TODO
-    /*
-    Can them background, can giua cho nut, them scene chon level sau sceneMenu
-     */
     @Override
     public void start(Stage stage) throws IOException {
+
         window = stage;
         window.setTitle("BomberMan");
         Button buttonPlay = new Button("Play");
@@ -143,10 +140,6 @@ public class BombermanGame extends Application {
         window.show();
     }
 
-    //TODO
-    /*
-    Them nut quay lai scene menu
-     */
     public void displayRanking() {
 
     }
@@ -177,6 +170,8 @@ public class BombermanGame extends Application {
     }
 
     public void startGame(int level) {
+        sound = new Sound();
+        playMusic(9);
         Map levelMap = new Map();
         entities.clear();
         stillObjects.clear();
@@ -399,6 +394,19 @@ public class BombermanGame extends Application {
                 }
             }
         }
+    }
+
+    public static void playMusic(int i){
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+    public static void stopMusic(){
+        sound.stop();
+    }
+    public static void playSE(int i){
+        sound.setFile(i);
+        sound.play();
     }
 
     public void detectGameEnd() {
