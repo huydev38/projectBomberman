@@ -51,6 +51,7 @@ public class Bomb extends Entity {
 
     public boolean checkExploded() {
         if (countDownTime == 0) {
+            BombermanGame.playSE(0);
             isExploded = true;
         }
         return isExploded;

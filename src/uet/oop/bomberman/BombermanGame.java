@@ -29,7 +29,7 @@ import uet.oop.bomberman.entities.Item.itemFlame;
 import uet.oop.bomberman.entities.Item.itemSpeed;
 import uet.oop.bomberman.entities.MapEntities.Brick;
 import uet.oop.bomberman.entities.MapEntities.Grass;
-import uet.oop.bomberman.entities.MapEntities.Portal;
+import uet.oop.bomberman.entities.Item.Portal;
 import uet.oop.bomberman.entities.MapEntities.Wall;
 import uet.oop.bomberman.entities.MovingEntities.Balloon;
 import uet.oop.bomberman.entities.MovingEntities.Bomber;
@@ -174,7 +174,7 @@ public class BombermanGame extends Application {
     public void startGame(int level) {
         sound = new Sound();
         se = new SoundEffect();
-        playMusic(9);
+        playMusic();
         seconds=startTime;
         Map levelMap = new Map();
         entities.clear();
@@ -270,30 +270,32 @@ public class BombermanGame extends Application {
         if (level != 3 && isAlive) {
             level += 1;
             startGame(level);
-        } else {
-            StackPane layoutEndGame = new StackPane();
-            sceneEndGame = new Scene(layoutEndGame, 1200, 800);
-            //Menu
-            Image image = new Image(getClass().getResourceAsStream("/menu/gameover.png"));
-            ImageView imageView = new ImageView(image);
-            Button backToMenu = new Button("Back To Menu");
-            backToMenu.setTranslateY(250);
-            backToMenu.setFont(Font.font("Comic Sans MS"));
-            backToMenu.setMaxWidth(200);
-            backToMenu.setMaxHeight(30);
-            imageView.setX(0);
-            imageView.setY(0);
-            imageView.setFitHeight(800);
-            imageView.setFitWidth(1500);
-            imageView.setPreserveRatio(true);
-            layoutEndGame.getChildren().addAll(imageView, backToMenu);
-            window.setScene(sceneEndGame);
-            window.show();
-            backToMenu.setOnAction(event -> {
-                window.setScene(sceneMenu);
-            });
+        } else if(level==3) {
+            //TODO thêm màn hình win + score + thời gian
+        } else{
+                StackPane layoutEndGame = new StackPane();
+                sceneEndGame = new Scene(layoutEndGame, 1200, 800);
+                //Menu
+                Image image = new Image(getClass().getResourceAsStream("/menu/gameover.png"));
+                ImageView imageView = new ImageView(image);
+                Button backToMenu = new Button("Back To Menu");
+                backToMenu.setTranslateY(250);
+                backToMenu.setFont(Font.font("Comic Sans MS"));
+                backToMenu.setMaxWidth(200);
+                backToMenu.setMaxHeight(30);
+                imageView.setX(0);
+                imageView.setY(0);
+                imageView.setFitHeight(800);
+                imageView.setFitWidth(1500);
+                imageView.setPreserveRatio(true);
+                layoutEndGame.getChildren().addAll(imageView, backToMenu);
+                window.setScene(sceneEndGame);
+                window.show();
+                backToMenu.setOnAction(event -> {
+                    window.setScene(sceneMenu);
+                });
+            }
         }
-    }
 
     public void doTime(Label TimerDisplay) {
         TimerDisplay.setTextFill(BLACK);
@@ -401,8 +403,8 @@ public class BombermanGame extends Application {
         }
     }
 
-    public static void playMusic(int i){
-        sound.setFile(i);
+    public static void playMusic(){
+        sound.setFile();
         sound.play();
         sound.loop();
     }

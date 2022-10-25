@@ -2,7 +2,6 @@ package uet.oop.bomberman.entities.Item;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.MapEntities.Portal;
 import uet.oop.bomberman.entities.MovingEntities.Bomber;
 
 public abstract class Item extends Entity {

@@ -10,15 +10,22 @@ public class SoundEffect {
         String[] soundURL = new String[30];
 
         public SoundEffect(){
-            soundURL[0]=("res/sound/Walking 1.wav");
-            soundURL[1]=("res/sound/Place Bomb.wav");
-            soundURL[2]=("res/sound/Enemy Dies.wav");
-            soundURL[3]=("res/sound/Item Get.wav");
-            soundURL[4]=("res/sound/Bomb Explodes.wav");
-            soundURL[5]=("res/sound/Bomberman Dies.wav");
-            soundURL[6]=("res/sound/Stage Clear.wav");
-            soundURL[7]=("res/sound/Stage Intro.wav");
-            soundURL[8]=("res/sound/Time Up (Full).wav");
+            //Bomb explode
+            soundURL[0]=("res/sound/burning.wav");
+            //Kill enemy
+            soundURL[1]=("res/sound/coin.wav");
+            //Get item
+            soundURL[2]=("res/sound/powerup.wav");
+            //PlantBomb
+            soundURL[3]=("res/sound/blocked.wav");
+            //Game Over
+            soundURL[4]=("res/sound/gameover.wav");
+            //Walk
+            soundURL[5]=("res/sound/cursor.wav");
+            //clear stage
+            soundURL[6]=("res/sound/fanfare.wav");
+//            soundURL[7]=("res/sound/Stage Intro.wav");
+//            soundURL[8]=("res/sound/Time Up (Full).wav");
         }
         public void setFile(int i){
             try{
@@ -27,6 +34,9 @@ public class SoundEffect {
                 clip.open(ais);
             }catch (Exception e){
             }
+        }
+        public void loop(){
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
         }
         public void play(){
             clip.start();

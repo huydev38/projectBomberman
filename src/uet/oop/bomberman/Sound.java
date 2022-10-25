@@ -7,23 +7,15 @@ import java.io.File;
 
 public class Sound {
     Clip clip;
-    String[] soundURL = new String[30];
+    String soundURL;
 
     public Sound(){
-        soundURL[0]=("res/sound/Walking 1.wav");
-        soundURL[1]=("res/sound/Place Bomb.wav");
-        soundURL[2]=("res/sound/Enemy Dies.wav");
-        soundURL[3]=("res/sound/Item Get.wav");
-        soundURL[4]=("res/sound/Bomb Explodes.wav");
-        soundURL[5]=("res/sound/Bomberman Dies.wav");
-        soundURL[6]=("res/sound/Stage Clear.wav");
-        soundURL[7]=("res/sound/Stage Intro.wav");
-        soundURL[8]=("res/sound/Time Up (Full).wav");
-        soundURL[9]=("res/sound/Stage Theme.wav");
+
+        soundURL=("res/sound/BlueBoyAdventure.wav");
     }
-    public void setFile(int i){
+    public void setFile(){
         try{
-            AudioInputStream ais = AudioSystem.getAudioInputStream(new File(soundURL[i]).getAbsoluteFile());
+            AudioInputStream ais = AudioSystem.getAudioInputStream(new File(soundURL).getAbsoluteFile());
             clip=AudioSystem.getClip();
             clip.open(ais);
         }catch (Exception e){

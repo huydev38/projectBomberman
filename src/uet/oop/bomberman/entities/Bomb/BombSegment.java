@@ -7,7 +7,7 @@ import uet.oop.bomberman.entities.Item.itemBomb;
 import uet.oop.bomberman.entities.Item.itemFlame;
 import uet.oop.bomberman.entities.Item.itemSpeed;
 import uet.oop.bomberman.entities.MapEntities.Brick;
-import uet.oop.bomberman.entities.MapEntities.Portal;
+import uet.oop.bomberman.entities.Item.Portal;
 import uet.oop.bomberman.entities.MovingEntities.AnimatedObject;
 import uet.oop.bomberman.graphics.Sprite;
 

@@ -9,8 +9,8 @@ public class Minvo extends AnimatedObject {
     private int speed = 1;
     private boolean isAlive = true;
     private int dieTime = 180;
-    String[] directions = {"LEFT", "UP", "RIGHT", "DOWN"};
-    String currentMove = "LEFT";
+    String[] directions = {"LEFT", "DOWN", "LEFT", "DOWN", "UP", "RIGHT", "UP", "RIGHT"};
+    String currentMove = "UP";
     int i = 0;
 
     public Minvo(int x, int y, Image img) {
@@ -36,7 +36,7 @@ public class Minvo extends AnimatedObject {
             return currentMove;
         }
         i++;
-        int j = i % 4;
+        int j = i % 8;
         currentMove = directions[j];
         return currentMove;
     }
