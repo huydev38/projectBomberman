@@ -9,7 +9,7 @@ public class Oneal extends AnimatedObject {
     private int speed = 1;
     private boolean isAlive = true;
     private int dieTime = 180;
-    String[] directions = {"LEFT", "RIGHT"};
+    String[] directions = {"RIGHT", "LEFT"};
     String currentMove = "LEFT";
     int i = 0;
 
