@@ -1,9 +1,12 @@
 package uet.oop.bomberman.entities.MovingEntities;
 
 import javafx.scene.image.Image;
+import javafx.util.Pair;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.ConvertCordinate;
 import uet.oop.bomberman.graphics.Sprite;
+
+import java.util.*;
 
 public class Minvo extends AnimatedObject {
     private int speed = 1;
@@ -12,6 +15,8 @@ public class Minvo extends AnimatedObject {
     String[] directions = {"LEFT", "DOWN", "LEFT", "DOWN", "UP", "RIGHT", "UP", "RIGHT"};
     String currentMove = "UP";
     int i = 0;
+
+    private List<Pair<Integer, Integer>> path = new ArrayList<Pair<Integer,Integer>>();
 
     public Minvo(int x, int y, Image img) {
         super(x, y, img);
@@ -83,6 +88,11 @@ public class Minvo extends AnimatedObject {
         BombermanGame.removeEntities(this);
         BombermanGame.enemyCount -= 1;
         BombermanGame.score += 30;
+
+    }
+
+    public void findPath(int ty, int tx){
+        
 
     }
 
