@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static javafx.scene.paint.Color.BLACK;
+import static javafx.scene.paint.Color.WHITE;
 
 public class BombermanGame extends Application {
 
@@ -170,15 +171,27 @@ public class BombermanGame extends Application {
 //        imageView.setFitWidth(1500);
 //        imageView.setPreserveRatio(true);
 
-        Image imageBackground = new Image(getClass().getResourceAsStream("/menu/menu.png"));
+        Image imageBackground = new Image(getClass().getResourceAsStream("/menu/ranking.png"));
         BackgroundImage backgroundImage = new BackgroundImage(imageBackground, BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.DEFAULT,new BackgroundSize(1,1,true,true,false,false));
+
         Background background = new Background(backgroundImage);
+
         scoreBoard.setBackground(background);
+        scoreBoard.setOpacity(1);
         Label labelRanking = new Label("LEADER BOARD");
         labelRanking.setFont(Font.font("Comic Sans MS",FontWeight.BOLD,50));
         labelRanking.setTextFill(BLACK);
         scoreBoard.getChildren().add(labelRanking);
         VBox layout = new VBox();
+        StringBuilder s = new StringBuilder();
+        s.append(String.format("%10s","Name"));
+        s.append(String.format("%10s","Score"));
+        s.append(String.format("%10s","Time"));
+
+        Label label = new Label(s.toString());
+        label.setFont(Font.font("Comic Sans MS",FontWeight.BOLD,30));
+        label.setTextFill(BLACK);
+        layout.getChildren().add(label);
         for(int i=0;i<5;i++){
             Label ranking = new Label((i+1) +listRank[i]);
             ranking.setFont(Font.font("Comic Sans MS",FontWeight.BOLD,30));
@@ -198,6 +211,8 @@ public class BombermanGame extends Application {
         sceneRanking = new Scene(scoreBoard,1200,800);
         window.setScene(sceneRanking);
     }
+
+
     public void initPlayerSection(){
         TextField plName = new TextField("Enter your name");
 
@@ -378,40 +393,69 @@ public class BombermanGame extends Application {
         root.getChildren().removeAll();
         if (level != 3 && isAlive) {
             level += 1;
-            player.setTime(player.getTime()+(300-seconds));
+            player.setTime(player.getTime() + (300 - seconds));
             startGame(level);
-        } else if(level==3&&isAlive) {
-            player.setTime(player.getTime()+(300-seconds));
+        } else if (level==3&&isAlive) {
+            player.setTime(player.getTime() + (300 - seconds));
             player.setScore(score);
             player.WriteToFile();
-            //TODO thêm màn hình win + score + thời gian
-        } else
-                player.setTime(player.getTime()+(300-seconds));
-                player.setScore(score);
-                player.WriteToFile();
-                score=0;
-                StackPane layoutEndGame = new StackPane();
-                sceneEndGame = new Scene(layoutEndGame, 1200, 800);
-                //Menu
-                Image image = new Image(getClass().getResourceAsStream("/menu/gameover.png"));
-                ImageView imageView = new ImageView(image);
-                Button backToMenu = new Button("Back To Menu");
-                backToMenu.setTranslateY(250);
-                backToMenu.setFont(Font.font("Comic Sans MS"));
-                backToMenu.setMaxWidth(200);
-                backToMenu.setMaxHeight(30);
-                imageView.setX(0);
-                imageView.setY(0);
-                imageView.setFitHeight(800);
-                imageView.setFitWidth(1500);
-                imageView.setPreserveRatio(true);
-                layoutEndGame.getChildren().addAll(imageView, backToMenu);
-                window.setScene(sceneEndGame);
-                window.show();
-                backToMenu.setOnAction(event -> {
-                    window.setScene(sceneMenu);
-                });
-            }
+            score = 0;
+            StackPane layoutEndGame = new StackPane();
+            sceneEndGame = new Scene(layoutEndGame, 1200, 800);
+            Image image = new Image(getClass().getResourceAsStream("/menu/win.png"));
+            ImageView imageView = new ImageView(image);
+            Button backToMenu = new Button("Back To Menu");
+            backToMenu.setTranslateY(250);
+            backToMenu.setFont(Font.font("Comic Sans MS"));
+            backToMenu.setMaxWidth(200);
+            backToMenu.setMaxHeight(30);
+            imageView.setX(0);
+            imageView.setY(0);
+            imageView.setFitHeight(800);
+            imageView.setFitWidth(1500);
+            imageView.setPreserveRatio(false);
+            Label result = new Label("Score: " + player.getScore() + "   " + "Time: " + player.getTime());
+            result.setTranslateY(180);
+            result.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 24));
+            result.setTextFill(WHITE);
+            layoutEndGame.getChildren().addAll(imageView, backToMenu, result);
+            window.setScene(sceneEndGame);
+            window.show();
+            backToMenu.setOnAction(event -> {
+                window.setScene(sceneMenu);
+            });
+        } else {
+            player.setTime(player.getTime() + (300 - seconds));
+            player.setScore(score);
+            player.WriteToFile();
+            score = 0;
+            StackPane layoutEndGame = new StackPane();
+            sceneEndGame = new Scene(layoutEndGame, 1200, 800);
+            //Menu
+            Image image = new Image(getClass().getResourceAsStream("/menu/gameover.png"));
+            ImageView imageView = new ImageView(image);
+            Button backToMenu = new Button("Back To Menu");
+            backToMenu.setTranslateY(250);
+            backToMenu.setFont(Font.font("Comic Sans MS"));
+            backToMenu.setMaxWidth(200);
+            backToMenu.setMaxHeight(30);
+            imageView.setX(0);
+            imageView.setY(0);
+            imageView.setFitHeight(800);
+            imageView.setFitWidth(1500);
+            imageView.setPreserveRatio(true);
+            Label result = new Label("Score: " + player.getScore() + "   " + "Time: " + player.getTime());
+            result.setTranslateY(180);
+            result.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 24));
+            result.setTextFill(WHITE);
+            layoutEndGame.getChildren().addAll(imageView, backToMenu, result);
+            window.setScene(sceneEndGame);
+            window.show();
+            backToMenu.setOnAction(event -> {
+                window.setScene(sceneMenu);
+            });
+        }
+    }
 
 
     public void doTime(Label TimerDisplay) {

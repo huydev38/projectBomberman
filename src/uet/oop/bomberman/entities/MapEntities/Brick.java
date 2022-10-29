@@ -8,17 +8,17 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public class Brick extends Entity {
     private boolean isBroken=false;
-    private int breakTime = 30*3;
+    private int breakTime = 20*3;
     public Brick(int x, int y, Image img) {
         super( x, y, img);
     }
 
     public void displayBreak(){
         if(isBroken==true){
-            if(breakTime==30*3){
+            if(breakTime==20*3){
                 setImg(Sprite.brick_exploded.getImage());
             }
-            if(breakTime==20*3){
+            if(breakTime==15*3){
                 setImg(Sprite.brick_exploded1.getImage());
             }
             if(breakTime==10*3){
