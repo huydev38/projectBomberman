@@ -1,4 +1,4 @@
-package uet.oop.bomberman;
+package uet.oop.bomberman.player;
 
 import java.io.File;
 import java.io.FileNotFoundException;

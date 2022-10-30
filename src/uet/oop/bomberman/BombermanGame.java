@@ -36,6 +36,11 @@ import uet.oop.bomberman.entities.MovingEntities.Bomber;
 import uet.oop.bomberman.entities.MovingEntities.Minvo;
 import uet.oop.bomberman.entities.MovingEntities.Oneal;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.map.Map;
+import uet.oop.bomberman.player.Player;
+import uet.oop.bomberman.player.PlayerManagement;
+import uet.oop.bomberman.sound.Sound;
+import uet.oop.bomberman.sound.SoundEffect;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -140,7 +145,7 @@ public class BombermanGame extends Application {
         buttonPlay.setMaxWidth(200);
         buttonPlay.setOnAction(event -> {
 //            startGame(level);
-            initPlayerSection();
+            initPlayerSession();
         });
         buttonRanking.setOnAction(event -> {
             try {
@@ -213,7 +218,7 @@ public class BombermanGame extends Application {
     }
 
 
-    public void initPlayerSection(){
+    public void initPlayerSession(){
         TextField plName = new TextField("Enter your name");
 
         plName.setFont(Font.font("Comic Sans MS",FontWeight.BOLD,24));
@@ -230,8 +235,10 @@ public class BombermanGame extends Application {
         imageView.setPreserveRatio(true);
         r.getChildren().add(imageView);
         EventHandler<ActionEvent> event = event1 -> {
-            player = new Player(plName.getText(),0,0);
-            startGame(level);
+
+                player = new Player(plName.getText(), 0, 0);
+                startGame(level);
+
         };
         plName.setOnAction(event);
         r.getChildren().add(plName);
@@ -265,21 +272,7 @@ public class BombermanGame extends Application {
 
         });
     }
-    public void displayIntroduceLevel(int level){
-            StackPane layoutIntroduce = new StackPane();
-            if (level == 1) {
-                Image image = new Image(getClass().getResourceAsStream("/menu/level1.png"));
-                ImageView imageView = new ImageView(image);
-                sceneLevel = new Scene(layoutIntroduce, 1200, 800);
-                layoutIntroduce.getChildren().add(imageView);
-                imageView.setX(0);
-                imageView.setY(0);
-                imageView.setFitHeight(800);
-                imageView.setFitWidth(1500);
-                imageView.setPreserveRatio(true);
-                window.setScene(sceneLevel);
-            }
-    }
+
     public void startGame(int level) {
         sound = new Sound();
         se = new SoundEffect();

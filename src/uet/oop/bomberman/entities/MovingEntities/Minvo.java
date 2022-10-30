@@ -3,7 +3,7 @@ package uet.oop.bomberman.entities.MovingEntities;
 import javafx.scene.image.Image;
 import javafx.util.Pair;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.ConvertCordinate;
+import uet.oop.bomberman.map.ConvertCordinate;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.*;

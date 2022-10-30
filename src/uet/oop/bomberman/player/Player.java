@@ -1,4 +1,4 @@
-package uet.oop.bomberman;
+package uet.oop.bomberman.player;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,7 +9,11 @@ public class Player {
     private int time;
     public Player(){}
     public Player(String name, int score, int time){
-        this.name=name;
+        if(name.equals("")||name.equals("Enter your name")){
+            this.name="___";
+        }else{
+            this.name=name;
+        }
         this.score=score;
         this.time=time;
     }
@@ -42,6 +46,7 @@ public class Player {
     public void WriteToFile(){
         try{
             FileWriter fw = new FileWriter("res/ranking.txt",true);
+
             fw.write(name + " " + score + " " + time+"\n");
             fw.close();
         } catch (IOException e) {

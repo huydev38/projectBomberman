@@ -3,7 +3,7 @@ package uet.oop.bomberman.entities.MovingEntities;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.ConvertCordinate;
+import uet.oop.bomberman.map.ConvertCordinate;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Item.Item;
 import uet.oop.bomberman.entities.Item.Portal;
