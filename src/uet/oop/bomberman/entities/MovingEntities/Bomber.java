@@ -23,7 +23,7 @@ public class Bomber extends AnimatedObject {
 
 
     private boolean isMove = false;
-    int dieTime = 120 * 3;
+    int dieTime = 60 * 3;
 
     public void setBombMax(int bombMax) {
         this.bombMax = bombMax;
@@ -207,15 +207,15 @@ public class Bomber extends AnimatedObject {
 
     void dieAnimation() {
         if (isAlive == false) {
-            if (dieTime == 120 * 3) {
+            if (dieTime == 60 * 3) {
                 BombermanGame.playSE(4);
 
                 setImg(Sprite.player_dead1.getImage());
             }
-            if (dieTime == 90 * 3) {
+            if (dieTime == 30 * 3) {
                 setImg(Sprite.player_dead2.getImage());
             }
-            if (dieTime == 60 * 3) {
+            if (dieTime == 10 * 3) {
                 setImg(Sprite.player_dead3.getImage());
             }
             dieTime--;

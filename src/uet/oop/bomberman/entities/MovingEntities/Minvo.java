@@ -1,22 +1,18 @@
 package uet.oop.bomberman.entities.MovingEntities;
 
 import javafx.scene.image.Image;
-import javafx.util.Pair;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.map.ConvertCordinate;
 import uet.oop.bomberman.graphics.Sprite;
-
-import java.util.*;
+import uet.oop.bomberman.map.ConvertCordinate;
 
 public class Minvo extends AnimatedObject {
     private int speed = 1;
     private boolean isAlive = true;
-    private int dieTime = 180;
-    String[] directions = {"LEFT", "DOWN", "LEFT", "DOWN", "UP", "RIGHT", "UP", "RIGHT"};
+    private int dieTime = 120;
+    String[] directions = {"LEFT", "DOWN", "LEFT", "DOWN", "UP", "RIGHT", "UP", "RIGHT","DOWN","LEFT","UP","RIGHT"};
     String currentMove = "UP";
     int i = 0;
 
-    private List<Pair<Integer, Integer>> path = new ArrayList<Pair<Integer,Integer>>();
 
     public Minvo(int x, int y, Image img) {
         super(x, y, img);
@@ -36,15 +32,63 @@ public class Minvo extends AnimatedObject {
         }
     }
 
+    public String detectPlayer() {
+        //Right
+        for (int i = ConvertCordinate.getTileX(x); i < 31; i++) {
+            if(BombermanGame.MovableMap[ConvertCordinate.getTileY(y)][i]==0){
+                break;
+            }
+            if (BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][i] == 'p') {
+                return "RIGHT";
+            }
+        }
+        //Left
+        for (int i = ConvertCordinate.getTileX(x); i >= 0; i--) {
+            if(BombermanGame.MovableMap[ConvertCordinate.getTileY(y)][i]==0){
+                break;
+            }
+            if (BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][i] == 'p') {
+                return "LEFT";
+            }
+        }
+        //UP
+        for (int i = ConvertCordinate.getTileY(y); i >= 0; i--) {
+            if(BombermanGame.MovableMap[i][ConvertCordinate.getTileX(x)]==0){
+                break;
+            }
+            if (BombermanGame.mapMatrix[i][ConvertCordinate.getTileX(x)] == 'p') {
+                return "UP";
+            }
+        }
+        for (int i = ConvertCordinate.getTileY(y); i < 13; i++) {
+            if(BombermanGame.MovableMap[i][ConvertCordinate.getTileX(x)]==0){
+                break;
+            }
+            if (BombermanGame.mapMatrix[i][ConvertCordinate.getTileX(x)] == 'p') {
+                return "DOWN";
+            }
+        }
+        return "NO_FOUND";
+    }
     public String getNextDirection() {
+        if (detectPlayer() != "NO_FOUND") {
+            if (!canMove(x, y, detectPlayer(), this.speed)) {
+                if (canMove(x, y, currentMove, this.speed)) {
+                    return currentMove;
+                }
+            } else {
+                currentMove = detectPlayer();
+            }
+        }
         if (canMove(x, y, currentMove, this.speed)) {
             return currentMove;
         }
-        i++;
-        int j = i % 8;
-        currentMove = directions[j];
-        return currentMove;
-    }
+            i++;
+
+            int j = i % 8;
+            currentMove = directions[j];
+            return currentMove;
+        }
 
     public void moving() {
         if (isAlive == true) {
@@ -91,21 +135,18 @@ public class Minvo extends AnimatedObject {
 
     }
 
-    public void findPath(int ty, int tx){
-        
 
-    }
 
     void dieAnimation() {
         if (isAlive == false) {
             dieTime--;
-            if(dieTime==180){
+            if(dieTime==120){
                 setImg(Sprite.mob_dead1.getImage());
             }
-            if(dieTime==120){
+            if(dieTime==60){
                 setImg(Sprite.mob_dead2.getImage());
             }
-            if(dieTime==60){
+            if(dieTime==30){
                 setImg(Sprite.mob_dead3.getImage());
             }
         }

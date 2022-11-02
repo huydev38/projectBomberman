@@ -3,3 +3,37 @@ test2 60 88
 huy 10 51
 mai 10 74
 giang 20 49
+chien 10 80
+huy 0 8
+huy 0 29
+huy 0 14
+test 0 65
+huy 0 27
+w 0 20
+w 0 56
+f 0 12
+hshfs 0 36
+dhhashf 0 29
+fh 0 30
+shf 0 15
+wd 0 8
+dada 0 14
+dad 0 30
+daj 0 21
+dah 0 7
+dadj 0 12
+ajd 0 7
+hdha 0 12
+fsd 0 14
+dka 0 12
+dlwjkajd 30 13
+ ajdj;a 0 14
+ djad 0 8
+ jfj 0 11
+d 0 8
+jda 0 12
+dja;dajd 60 23
+jfja; 0 12
+jdja; 0 9
+fja 0 17
+jafj 30 78

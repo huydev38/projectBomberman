@@ -19,7 +19,7 @@ public class Map {
     public int[][] getMovableMap(){
         for(int i=0;i<h;i++){
             for(int j=0;j<w;j++){
-                if(mapMatrix[i][j]=='f'||mapMatrix[i][j]=='b'||mapMatrix[i][j]=='s'||mapMatrix[i][j]=='x'){
+                if(mapMatrix[i][j]=='f'||mapMatrix[i][j]=='b'||mapMatrix[i][j]=='s'||mapMatrix[i][j]=='x'||mapMatrix[i][j]=='*'||mapMatrix[i][j]=='#'){
                     MovableMap[i][j]=0;
                 }else{
                     MovableMap[i][j]=1;
