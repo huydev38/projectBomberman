@@ -1,7 +1,7 @@
 package uet.oop.bomberman.entities.Bomb;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.MapEntities.BombermanGame;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.Item.itemBomb;
 import uet.oop.bomberman.entities.Item.itemFlame;
@@ -18,8 +18,8 @@ public class BombSegment extends Entity {
     ArrayList<Flame> flamesRIGHT = new ArrayList<>();
     ArrayList<Flame> flamesUP = new ArrayList<>();
     ArrayList<Flame> flamesDOWN = new ArrayList<>();
-    private int centerX;
-    private int centerY;
+    private final int centerX;
+    private final int centerY;
     private int LengthLeft;
     private int LengthRight;
     private int LengthUp;
@@ -31,7 +31,7 @@ public class BombSegment extends Entity {
         super(x, y, image);
         this.centerX = x;
         this.centerY = y;
-        this.LengthDefault=LengthDefault;
+        this.LengthDefault = LengthDefault;
         SetFlame();
 
     }
@@ -42,7 +42,7 @@ public class BombSegment extends Entity {
 
     public void calculate() {
         for (int i = 1; i <= LengthDefault; i++) {
-            if (BombermanGame.mapMatrix[centerY][centerX - i] == '#' ) {
+            if (BombermanGame.mapMatrix[centerY][centerX - i] == '#') {
                 LengthLeft = i - 1;
                 break;
             }
@@ -69,25 +69,25 @@ public class BombSegment extends Entity {
 
     public void calculateforDisplay() {
         for (int i = 1; i <= LengthDefault; i++) {
-            if (BombermanGame.mapMatrix[centerY][centerX - i] == '*' || BombermanGame.mapMatrix[centerY][centerX - i] == '#' || BombermanGame.itemMap[centerY][centerX - i]!=' ') {
+            if (BombermanGame.mapMatrix[centerY][centerX - i] == '*' || BombermanGame.mapMatrix[centerY][centerX - i] == '#' || BombermanGame.itemMap[centerY][centerX - i] != ' ') {
                 LengthLeft = i - 1;
                 break;
             }
         }
         for (int i = 1; i <= LengthDefault; i++) {
-            if (BombermanGame.mapMatrix[centerY][centerX + i] == '*' || BombermanGame.mapMatrix[centerY][centerX + i] == '#'||BombermanGame.itemMap[centerY][centerX+i]!=' ') {
+            if (BombermanGame.mapMatrix[centerY][centerX + i] == '*' || BombermanGame.mapMatrix[centerY][centerX + i] == '#' || BombermanGame.itemMap[centerY][centerX + i] != ' ') {
                 LengthRight = i - 1;
                 break;
             }
         }
         for (int i = 1; i <= LengthDefault; i++) {
-            if (BombermanGame.mapMatrix[centerY - i][centerX] == '*' || BombermanGame.mapMatrix[centerY - i][centerX] == '#'||BombermanGame.itemMap[centerY-i][centerX]!=' ') {
+            if (BombermanGame.mapMatrix[centerY - i][centerX] == '*' || BombermanGame.mapMatrix[centerY - i][centerX] == '#' || BombermanGame.itemMap[centerY - i][centerX] != ' ') {
                 LengthUp = i - 1;
                 break;
             }
         }
         for (int i = 1; i <= LengthDefault; i++) {
-            if (BombermanGame.mapMatrix[centerY + i][centerX] == '*' || BombermanGame.mapMatrix[centerY + i][centerX] == '#'||BombermanGame.itemMap[centerY+i][centerX]!=' ') {
+            if (BombermanGame.mapMatrix[centerY + i][centerX] == '*' || BombermanGame.mapMatrix[centerY + i][centerX] == '#' || BombermanGame.itemMap[centerY + i][centerX] != ' ') {
                 LengthDown = i - 1;
                 break;
             }
@@ -112,10 +112,10 @@ public class BombSegment extends Entity {
             if (getEntityFromTile(centerX - i, centerY) instanceof itemFlame) {
                 ((itemFlame) getEntityFromTile(centerX - i, centerY)).setRevealed(true);
             }
-            if(getEntityFromTile(centerX-i,centerY) instanceof Portal){
-                ((Portal) getEntityFromTile(centerX-i,centerY)).setRevealed(true);
+            if (getEntityFromTile(centerX - i, centerY) instanceof Portal) {
+                ((Portal) getEntityFromTile(centerX - i, centerY)).setRevealed(true);
             }
-            if(getEntityFromTile(centerX-i,centerY) instanceof Bomb){
+            if (getEntityFromTile(centerX - i, centerY) instanceof Bomb) {
                 ((Bomb) getEntityFromTile(centerX - i, centerY)).setCountDownTime(0);
             }
         }
@@ -135,10 +135,10 @@ public class BombSegment extends Entity {
             if (getEntityFromTile(centerX + i, centerY) instanceof itemFlame) {
                 ((itemFlame) getEntityFromTile(centerX + i, centerY)).setRevealed(true);
             }
-            if(getEntityFromTile(centerX+i,centerY) instanceof Portal){
-                ((Portal) getEntityFromTile(centerX+i,centerY)).setRevealed(true);
+            if (getEntityFromTile(centerX + i, centerY) instanceof Portal) {
+                ((Portal) getEntityFromTile(centerX + i, centerY)).setRevealed(true);
             }
-            if(getEntityFromTile(centerX+i,centerY) instanceof Bomb){
+            if (getEntityFromTile(centerX + i, centerY) instanceof Bomb) {
                 ((Bomb) getEntityFromTile(centerX + i, centerY)).setCountDownTime(0);
             }
         }
@@ -155,14 +155,14 @@ public class BombSegment extends Entity {
             if (getEntityFromTile(centerX, centerY - i) instanceof itemSpeed) {
                 ((itemSpeed) getEntityFromTile(centerX, centerY - i)).setRevealed(true);
             }
-            if(getEntityFromTile(centerX,centerY-i) instanceof Portal){
-                ((Portal) getEntityFromTile(centerX,centerY-i)).setRevealed(true);
+            if (getEntityFromTile(centerX, centerY - i) instanceof Portal) {
+                ((Portal) getEntityFromTile(centerX, centerY - i)).setRevealed(true);
             }
-            if(getEntityFromTile(centerX,centerY-i) instanceof Bomb){
-                ((Bomb) getEntityFromTile(centerX, centerY-i)).setCountDownTime(0);
+            if (getEntityFromTile(centerX, centerY - i) instanceof Bomb) {
+                ((Bomb) getEntityFromTile(centerX, centerY - i)).setCountDownTime(0);
             }
-            if (getEntityFromTile(centerX, centerY-i) instanceof itemFlame) {
-                ((itemFlame) getEntityFromTile(centerX , centerY-i)).setRevealed(true);
+            if (getEntityFromTile(centerX, centerY - i) instanceof itemFlame) {
+                ((itemFlame) getEntityFromTile(centerX, centerY - i)).setRevealed(true);
             }
         }
         for (int i = 0; i <= LengthDown; i++) {
@@ -178,14 +178,14 @@ public class BombSegment extends Entity {
             if (getEntityFromTile(centerX, centerY + i) instanceof itemSpeed) {
                 ((itemSpeed) getEntityFromTile(centerX, centerY + i)).setRevealed(true);
             }
-            if(getEntityFromTile(centerX,centerY+i) instanceof Portal){
-                ((Portal) getEntityFromTile(centerX,centerY+i)).setRevealed(true);
+            if (getEntityFromTile(centerX, centerY + i) instanceof Portal) {
+                ((Portal) getEntityFromTile(centerX, centerY + i)).setRevealed(true);
             }
-            if (getEntityFromTile(centerX , centerY+i) instanceof itemFlame) {
-                ((itemFlame) getEntityFromTile(centerX, centerY+i)).setRevealed(true);
+            if (getEntityFromTile(centerX, centerY + i) instanceof itemFlame) {
+                ((itemFlame) getEntityFromTile(centerX, centerY + i)).setRevealed(true);
             }
-            if(getEntityFromTile(centerX,centerY+i) instanceof Bomb){
-                ((Bomb) getEntityFromTile(centerX, centerY+i)).setCountDownTime(0);
+            if (getEntityFromTile(centerX, centerY + i) instanceof Bomb) {
+                ((Bomb) getEntityFromTile(centerX, centerY + i)).setCountDownTime(0);
             }
         }
     }
@@ -307,17 +307,17 @@ public class BombSegment extends Entity {
             }
         }
         FlameTime--;
-      if(FlameTime==0){
-            for(int i=0;i<flamesRIGHT.size();i++){
+        if (FlameTime == 0) {
+            for (int i = 0; i < flamesRIGHT.size(); i++) {
                 flamesRIGHT.get(i).remove();
             }
-            for(int i=0;i<flamesLEFT.size();i++){
+            for (int i = 0; i < flamesLEFT.size(); i++) {
                 flamesLEFT.get(i).remove();
             }
-            for(int i=0;i<flamesUP.size();i++){
+            for (int i = 0; i < flamesUP.size(); i++) {
                 flamesUP.get(i).remove();
             }
-            for(int i=0;i<flamesDOWN.size();i++){
+            for (int i = 0; i < flamesDOWN.size(); i++) {
                 flamesDOWN.get(i).remove();
             }
             remove();

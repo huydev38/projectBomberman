@@ -1,7 +1,7 @@
 package uet.oop.bomberman.entities.MovingEntities;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.MapEntities.BombermanGame;
 import uet.oop.bomberman.map.ConvertCordinate;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -43,7 +43,7 @@ public class Balloon extends AnimatedObject {
     }
 
     public void moving() {
-        if (isAlive == true) {
+        if (isAlive) {
             String nextMove = getNextDirection();
             int tempX = x;
             int tempY = y;
@@ -69,21 +69,23 @@ public class Balloon extends AnimatedObject {
     @Override
     public void die() {
         isAlive = false;
-        speed=0;
-        BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)]=' ';
+        speed = 0;
+        BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] = ' ';
     }
-    public void remove(){
+
+    public void remove() {
         BombermanGame.removeEntities(this);
-        BombermanGame.enemyCount-=1;
-        BombermanGame.score+=10;
+        BombermanGame.enemyCount -= 1;
+        BombermanGame.score += 10;
 
     }
+
     void dieAnimation() {
-        if (isAlive == false) {
+        if (!isAlive) {
             dieTime--;
             setImg(Sprite.balloom_dead.getImage());
         }
-        if(dieTime==0){
+        if (dieTime == 0) {
             remove();
         }
 

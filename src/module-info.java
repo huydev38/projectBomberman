@@ -12,4 +12,6 @@ module uet.oop.bomberman {
     opens uet.oop.bomberman.map to javafx.fxml;
     exports uet.oop.bomberman.player;
     opens uet.oop.bomberman.player to javafx.fxml;
+    exports uet.oop.bomberman.entities.MapEntities;
+    opens uet.oop.bomberman.entities.MapEntities to javafx.fxml;
 }

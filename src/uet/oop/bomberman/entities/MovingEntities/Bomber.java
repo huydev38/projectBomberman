@@ -2,7 +2,7 @@ package uet.oop.bomberman.entities.MovingEntities;
 
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.MapEntities.BombermanGame;
 import uet.oop.bomberman.map.ConvertCordinate;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Item.Item;
@@ -79,7 +79,7 @@ public class Bomber extends AnimatedObject {
     public void moving() {
         int tempX = x;
         int tempY = y;
-        isMove=false;
+        isMove = false;
         if (isAlive) {
             if (moveLEFT) {
                 if (canMove(x, y, "LEFT", this.speed)) {
@@ -94,7 +94,7 @@ public class Bomber extends AnimatedObject {
                 if (canMove(x, y, "RIGHT", this.speed)) {
                     //if(canMove(mapMatrix,x+speed+26,y+2, x+speed+26, y+26)) {
                     x += speed;
-                    isMove=true;
+                    isMove = true;
                     checkCollide(tempX, tempY);
                     setImg((Sprite.movingSprite(Sprite.player_right, Sprite.player_right_1, Sprite.player_right_2, getX(), 15)).getImage());
                 }
@@ -102,7 +102,7 @@ public class Bomber extends AnimatedObject {
             if (moveUP) {
                 if (canMove(x, y, "UP", this.speed)) {
                     //if(canMove(mapMatrix,x+2,y-speed,x+26,y-speed)) {
-                    isMove=true;
+                    isMove = true;
                     y -= speed;
                     checkCollide(tempX, tempY);
                     setImg((Sprite.movingSprite(Sprite.player_up, Sprite.player_up_1, Sprite.player_up_2, getY(), 15)).getImage());
@@ -111,7 +111,7 @@ public class Bomber extends AnimatedObject {
             if (moveDOWN) {
                 if (canMove(x, y, "DOWN", this.speed)) {
                     //if(canMove(mapMatrix,x+2,y+speed+25,x+26,y+speed+26)) {
-                   isMove=true;
+                    isMove = true;
 
                     y += speed;
                     checkCollide(tempX, tempY);
@@ -119,7 +119,7 @@ public class Bomber extends AnimatedObject {
                 }
             }
         }
-        if (isMove){
+        if (isMove) {
             BombermanGame.playSE(5);
         }
     }
@@ -173,7 +173,7 @@ public class Bomber extends AnimatedObject {
             bombReloadTime = 0;
             b.updateTile(ConvertCordinate.getTileX(x), ConvertCordinate.getTileY(y), this);
             setBombCount(getBombCount() + 1);
-            BombermanGame.bombCount=bombMax-bombCount;
+            BombermanGame.bombCount = bombMax - bombCount;
         }
     }
 
@@ -206,7 +206,7 @@ public class Bomber extends AnimatedObject {
     }
 
     void dieAnimation() {
-        if (isAlive == false) {
+        if (!isAlive) {
             if (dieTime == 60 * 3) {
                 BombermanGame.playSE(4);
 
@@ -222,27 +222,25 @@ public class Bomber extends AnimatedObject {
         }
         if (dieTime == 0) {
             BombermanGame.removeEntities(this);
-            BombermanGame.endGame=true;
-            BombermanGame.isAlive=false;
+            BombermanGame.endGame = true;
+            BombermanGame.isAlive = false;
         }
     }
 
 
     public void checkCollide(int tempX, int tempY) {
-        if (BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] == '1' || BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] == '2'||BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)]=='3') {
+        if (BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] == '1' || BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] == '2' || BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] == '3') {
             this.die();
         } else if (BombermanGame.itemMap[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] != ' ') {
             updateTile(tempX, tempY);
             Item.getItem(x, y).addToBomber(this);
-            if(!(Item.getItem(x,y) instanceof Portal)){
+            if (!(Item.getItem(x, y) instanceof Portal)) {
                 BombermanGame.playSE(2);
             }
 
-        }
-        else if (BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] == 'x') {
+        } else if (BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] == 'x') {
 
-        }
-        else if (BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] != 'x') {
+        } else if (BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] != 'x') {
             updateTile(tempX, tempY);
         }
     }

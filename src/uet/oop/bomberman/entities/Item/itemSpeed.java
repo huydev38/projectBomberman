@@ -1,20 +1,21 @@
 package uet.oop.bomberman.entities.Item;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.MapEntities.BombermanGame;
 import uet.oop.bomberman.map.ConvertCordinate;
 import uet.oop.bomberman.entities.MovingEntities.Bomber;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class itemSpeed extends Item {
+    Bomber bomber;
     private boolean isTaken;
     private boolean isRevealed;
-    private int CountDownTime=1500;
-    Bomber bomber;
+    private int CountDownTime = 1500;
+
     public itemSpeed(int x, int y, Image img) {
         super(x, y, img);
-        isTaken=false;
-        isRevealed=false;
+        isTaken = false;
+        isRevealed = false;
     }
 
     @Override
@@ -24,7 +25,7 @@ public class itemSpeed extends Item {
 
     public void setRevealed(boolean revealed) {
         isRevealed = revealed;
-        BombermanGame.MovableMap[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)]=1;
+        BombermanGame.MovableMap[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] = 1;
     }
 
     public void setTaken(boolean taken) {
@@ -33,21 +34,21 @@ public class itemSpeed extends Item {
 
     @Override
     public void addToBomber(Bomber bomber) {
-        isTaken=true;
-        this.bomber=bomber;
-        BombermanGame.itemMap[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)]=' ';
+        isTaken = true;
+        this.bomber = bomber;
+        BombermanGame.itemMap[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] = ' ';
     }
 
-    public void remove(){
+    public void remove() {
         BombermanGame.removeEntities(this);
     }
 
-    public void countdown(){
-        if(isTaken==true&&CountDownTime>0){
+    public void countdown() {
+        if (isTaken && CountDownTime > 0) {
             CountDownTime--;
         }
-        if(CountDownTime==0){
-            isTaken=false;
+        if (CountDownTime == 0) {
+            isTaken = false;
             bomber.setSpeed(1);
             remove();
         }
@@ -55,10 +56,10 @@ public class itemSpeed extends Item {
 
     @Override
     public void update() {
-        if(isRevealed){
+        if (isRevealed) {
             setImg(Sprite.powerup_speed.getFxImage());
         }
-        if(isTaken) {
+        if (isTaken) {
             if (bomber.isAlive) {
                 setImg(Sprite.grass.getFxImage());
                 bomber.setSpeed(3);

@@ -1,4 +1,4 @@
-package uet.oop.bomberman;
+package uet.oop.bomberman.entities.MapEntities;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -76,8 +76,8 @@ public class BombermanGame extends Application {
     private GraphicsContext gc;
     private Canvas canvas;
     private Player player;
-    private static List<Entity> entities = new ArrayList<>();
-    private static List<Entity> stillObjects = new ArrayList<>();
+    private static final List<Entity> entities = new ArrayList<>();
+    private static final List<Entity> stillObjects = new ArrayList<>();
 
     public static void removeEntities(Entity e) {
         entities.remove(e);
@@ -102,9 +102,6 @@ public class BombermanGame extends Application {
     public static SoundEffect se;
     Group root = new Group();
 
-    public static void main(String[] args) {
-        Application.launch(args);
-    }
 
     @Override
     public void start(Stage stage) {
@@ -188,12 +185,11 @@ public class BombermanGame extends Application {
         labelRanking.setTextFill(BLACK);
         scoreBoard.getChildren().add(labelRanking);
         VBox layout = new VBox();
-        StringBuilder s = new StringBuilder();
-        s.append(String.format("%10s","Name"));
-        s.append(String.format("%10s","Score"));
-        s.append(String.format("%10s","Time"));
+        String s = String.format("%10s", "Name") +
+                String.format("%10s", "Score") +
+                String.format("%10s", "Time");
 
-        Label label = new Label(s.toString());
+        Label label = new Label(s);
         label.setFont(Font.font("Comic Sans MS",FontWeight.BOLD,30));
         label.setTextFill(BLACK);
         layout.getChildren().add(label);

@@ -1,7 +1,7 @@
 package uet.oop.bomberman.entities.MovingEntities;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.MapEntities.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.map.ConvertCordinate;
 
@@ -91,7 +91,7 @@ public class Minvo extends AnimatedObject {
         }
 
     public void moving() {
-        if (isAlive == true) {
+        if (isAlive) {
             String nextMove = getNextDirection();
             int tempX = x;
             int tempY = y;
@@ -138,7 +138,7 @@ public class Minvo extends AnimatedObject {
 
 
     void dieAnimation() {
-        if (isAlive == false) {
+        if (!isAlive) {
             dieTime--;
             if(dieTime==120){
                 setImg(Sprite.mob_dead1.getImage());

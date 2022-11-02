@@ -1,7 +1,7 @@
 package uet.oop.bomberman.entities.MovingEntities;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.MapEntities.BombermanGame;
 import uet.oop.bomberman.map.ConvertCordinate;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -26,13 +26,13 @@ public class Oneal extends AnimatedObject {
 
     @Override
     public void updateTile(int tx, int ty) {
-        if (BombermanGame.mapMatrix[ConvertCordinate.getTileY(ty)][ConvertCordinate.getTileX(tx)] != 1 && BombermanGame.mapMatrix[ConvertCordinate.getTileY(ty)][ConvertCordinate.getTileX(tx)] != 3){
+        if (BombermanGame.mapMatrix[ConvertCordinate.getTileY(ty)][ConvertCordinate.getTileX(tx)] != 1 && BombermanGame.mapMatrix[ConvertCordinate.getTileY(ty)][ConvertCordinate.getTileX(tx)] != 3) {
 
             BombermanGame.mapMatrix[ConvertCordinate.getTileY(ty)][ConvertCordinate.getTileX(tx)] = ' ';
-        BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] = '2';
-    }
+            BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] = '2';
+        }
 
-}
+    }
 
     public String getNextDirection() {
         if (canMove(x, y, currentMove, this.speed)) {
@@ -45,7 +45,7 @@ public class Oneal extends AnimatedObject {
     }
 
     public void moving() {
-        if (isAlive == true) {
+        if (isAlive) {
             String nextMove = getNextDirection();
             int tempX = x;
             int tempY = y;
@@ -71,21 +71,23 @@ public class Oneal extends AnimatedObject {
     @Override
     public void die() {
         isAlive = false;
-        speed=0;
+        speed = 0;
 
-        BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)]=' ';
+        BombermanGame.mapMatrix[ConvertCordinate.getTileY(y)][ConvertCordinate.getTileX(x)] = ' ';
     }
-    public void remove(){
+
+    public void remove() {
         BombermanGame.removeEntities(this);
-        BombermanGame.score+=20;
-        BombermanGame.enemyCount-=1;
+        BombermanGame.score += 20;
+        BombermanGame.enemyCount -= 1;
     }
+
     void dieAnimation() {
-        if (isAlive == false) {
+        if (!isAlive) {
             dieTime--;
             setImg(Sprite.oneal_dead.getImage());
         }
-        if(dieTime==0){
+        if (dieTime == 0) {
             remove();
         }
 

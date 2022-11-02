@@ -1,7 +1,7 @@
 package uet.oop.bomberman.entities.Bomb;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.MapEntities.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
 
 public class Flame extends Entity {
@@ -13,7 +13,8 @@ public class Flame extends Entity {
     public void setImg(Image img) {
         super.setImg(img);
     }
-    public void remove(){
+
+    public void remove() {
         BombermanGame.removeEntities(this);
     }
 
