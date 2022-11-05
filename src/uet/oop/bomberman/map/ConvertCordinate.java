@@ -13,7 +13,7 @@ public class ConvertCordinate {
     }
 
     public static int getTileX(int x) {
-        if ((x / Sprite.SCALED_SIZE) + 1 == (x + 5) / Sprite.SCALED_SIZE) {
+        if ((x / Sprite.SCALED_SIZE) + 1 == (x + 9) / Sprite.SCALED_SIZE) {
             return (x / Sprite.SCALED_SIZE) + 1;
         } else {
             return x / Sprite.SCALED_SIZE;
@@ -21,7 +21,7 @@ public class ConvertCordinate {
     }
 
     public static int getTileY(int y) {
-        if ((y / Sprite.SCALED_SIZE) + 1 == (y + 5) / Sprite.SCALED_SIZE) {
+        if ((y / Sprite.SCALED_SIZE) + 1 == (y + 9) / Sprite.SCALED_SIZE) {
             return (y / Sprite.SCALED_SIZE) + 1;
         } else {
             return y / Sprite.SCALED_SIZE;
