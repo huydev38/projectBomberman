@@ -28,15 +28,13 @@ import uet.oop.bomberman.entities.Item.Portal;
 import uet.oop.bomberman.entities.Item.itemBomb;
 import uet.oop.bomberman.entities.Item.itemFlame;
 import uet.oop.bomberman.entities.Item.itemSpeed;
-import uet.oop.bomberman.entities.MapEntities.Brick;
-import uet.oop.bomberman.entities.MapEntities.Grass;
-import uet.oop.bomberman.entities.MapEntities.Wall;
 import uet.oop.bomberman.entities.MovingEntities.Balloon;
 import uet.oop.bomberman.entities.MovingEntities.Bomber;
 import uet.oop.bomberman.entities.MovingEntities.Minvo;
 import uet.oop.bomberman.entities.MovingEntities.Oneal;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.map.Map;
+import uet.oop.bomberman.player.Character;
 import uet.oop.bomberman.player.Player;
 import uet.oop.bomberman.player.PlayerManagement;
 import uet.oop.bomberman.sound.Sound;
@@ -45,6 +43,9 @@ import uet.oop.bomberman.sound.SoundEffect;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static javafx.scene.paint.Color.BLACK;
 import static javafx.scene.paint.Color.WHITE;
@@ -215,36 +216,110 @@ public class BombermanGame extends Application {
 
 
     public void initPlayerSession(){
-        TextField plName = new TextField("Enter your name");
+        boolean character1 = true;
+        StackPane pane1 = new StackPane();
+        AnimationTimer timer2;
 
-        plName.setFont(Font.font("Comic Sans MS",FontWeight.BOLD,24));
-        plName.setMaxWidth(400);
-        plName.setAlignment(Pos.CENTER);
-
-        StackPane r = new StackPane();
-        Image image = new Image(getClass().getResourceAsStream("/menu/menu.png"));
+        Image image = new Image(getClass().getResourceAsStream("/menu/character1.jpg"));
+        AtomicBoolean br = new AtomicBoolean(false);
         ImageView imageView = new ImageView(image);
         imageView.setX(0);
         imageView.setY(0);
         imageView.setFitHeight(800);
         imageView.setFitWidth(1500);
         imageView.setPreserveRatio(true);
-        r.getChildren().add(imageView);
-        EventHandler<ActionEvent> event = event1 -> {
+        Button buttonCf = new Button("Warrior");
+        Button hunter = new Button("Hunter");
+        buttonCf.setTranslateY(170);
+        buttonCf.setTranslateX(-270);
+        buttonCf.setMaxWidth(200);
+        buttonCf.setMaxHeight(30);
+        hunter.setTranslateY(170);
+        hunter.setTranslateX(270);
+        hunter.setMaxWidth(200);
+        hunter.setMaxHeight(30);
+
+        pane1.getChildren().addAll(imageView, buttonCf, hunter);
+        Scene chooseChar = new Scene(pane1, 1200, 800);
+        window.setScene(chooseChar);
+
+        EventHandler<ActionEvent> eventWarrior = event0 -> {
+            StackPane pane2 = new StackPane();
+            Character.warrior = true;
+
+            TextField plName = new TextField("Enter your name");
+
+            plName.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 24));
+            plName.setMaxWidth(400);
+            plName.setAlignment(Pos.CENTER);
+
+
+            EventHandler<ActionEvent> event = event1 -> {
 
                 player = new Player(plName.getText(), 0, 0);
                 startGame(level);
 
+            };
+            plName.setOnAction(event);
+            ImageView imageView1 = new ImageView(new Image(getClass().getResourceAsStream("/menu/ranking.png")));
+            imageView1.setX(0);
+            imageView1.setY(0);
+            imageView1.setFitHeight(800);
+            imageView1.setFitWidth(1500);
+            imageView1.setPreserveRatio(true);
+            pane2.getChildren().addAll(imageView1, plName);
+
+
+            getPlayerName = new Scene(pane2, 1200, 800);
+            window.setScene(getPlayerName);
+
         };
-        plName.setOnAction(event);
-        r.getChildren().add(plName);
+        buttonCf.setOnAction(eventWarrior);
+
+        EventHandler<ActionEvent> eventHunter = event2 -> {
+            StackPane pane2 = new StackPane();
+
+            Character.warrior = false;
+            TextField plName = new TextField("Enter your name");
+
+            plName.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 24));
+            plName.setMaxWidth(400);
+            plName.setAlignment(Pos.CENTER);
 
 
-        getPlayerName = new Scene(r, 1200, 800);
-        window.setScene(getPlayerName);
+            EventHandler<ActionEvent> event = event1 -> {
+
+                player = new Player(plName.getText(), 0, 0);
+                startGame(level);
+
+            };
+            plName.setOnAction(event);
+            ImageView imageView1 = new ImageView(new Image(getClass().getResourceAsStream("/menu/ranking.png")));
+            imageView1.setX(0);
+            imageView1.setY(0);
+            imageView1.setFitHeight(800);
+            imageView1.setFitWidth(1500);
+            imageView1.setPreserveRatio(true);
+            pane2.getChildren().addAll(imageView1, plName);
 
 
+            getPlayerName = new Scene(pane2, 1200, 800);
+            window.setScene(getPlayerName);
+
+        };
+        hunter.setOnAction(eventHunter);
     }
+
+    public Image character1()  {
+        Image image = new Image(getClass().getResourceAsStream("/menu/character1.png"));
+        return image;
+    }
+
+    public Image character2()  {
+        Image image = new Image(getClass().getResourceAsStream("/menu/character2.png"));
+        return image;
+    }
+
     public void displayInstruction() {
         StackPane layoutInstruction = new StackPane();
         sceneInstruction = new Scene(layoutInstruction, 1200, 800);
@@ -274,8 +349,8 @@ public class BombermanGame extends Application {
         se = new SoundEffect();
         playMusic();
         seconds=startTime;
-//        z=0;
-//        displayIntroduceLevel(level);
+        //z=0;
+        //displayIntroduceLevel(level);
 
             Map levelMap = new Map();
             entities.clear();
