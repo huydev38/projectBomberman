@@ -1,7 +1,7 @@
 package uet.oop.bomberman.graphics;
 
 import javafx.scene.image.*;
-import uet.oop.bomberman.player.Character;
+import uet.oop.bomberman.entities.MapEntities.BombermanGame;
 
 /**
  * Lưu trữ thông tin các pixel của 1 sprite (hình ảnh game)
@@ -201,7 +201,7 @@ public class Sprite {
 	}
 
 	public Sprite(int size, int x, int y, SpriteSheet sheet, int rw, int rh, boolean a)  {
-		if (Character.warrior)  {
+		if (BombermanGame.warrior&&a)  {
 			y -= 12;
 		}
 		SIZE = size;
@@ -225,7 +225,7 @@ public class Sprite {
 	}
 
 	public void character2()  {
-		if (Character.warrior)  {
+		if (BombermanGame.warrior)  {
 			this.player_up._y = 0;
 			this.player_up_1._y = 1;
 			this.player_up_2._y = 2;

@@ -34,7 +34,6 @@ import uet.oop.bomberman.entities.MovingEntities.Minvo;
 import uet.oop.bomberman.entities.MovingEntities.Oneal;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.map.Map;
-import uet.oop.bomberman.player.Character;
 import uet.oop.bomberman.player.Player;
 import uet.oop.bomberman.player.PlayerManagement;
 import uet.oop.bomberman.sound.Sound;
@@ -43,8 +42,6 @@ import uet.oop.bomberman.sound.SoundEffect;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static javafx.scene.paint.Color.BLACK;
@@ -102,6 +99,7 @@ public class BombermanGame extends Application {
     public static Sound sound;
     public static SoundEffect se;
     Group root = new Group();
+    public static boolean warrior = true;
 
 
     @Override
@@ -245,7 +243,7 @@ public class BombermanGame extends Application {
 
         EventHandler<ActionEvent> eventWarrior = event0 -> {
             StackPane pane2 = new StackPane();
-            Character.warrior = true;
+
 
             TextField plName = new TextField("Enter your name");
 
@@ -257,6 +255,7 @@ public class BombermanGame extends Application {
             EventHandler<ActionEvent> event = event1 -> {
 
                 player = new Player(plName.getText(), 0, 0);
+                warrior = true;
                 startGame(level);
 
             };
@@ -279,7 +278,7 @@ public class BombermanGame extends Application {
         EventHandler<ActionEvent> eventHunter = event2 -> {
             StackPane pane2 = new StackPane();
 
-            Character.warrior = false;
+
             TextField plName = new TextField("Enter your name");
 
             plName.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 24));
@@ -288,7 +287,7 @@ public class BombermanGame extends Application {
 
 
             EventHandler<ActionEvent> event = event1 -> {
-
+                warrior = false;
                 player = new Player(plName.getText(), 0, 0);
                 startGame(level);
 
@@ -492,6 +491,7 @@ public class BombermanGame extends Application {
             player.setTime(player.getTime() + (300 - seconds));
             player.setScore(score);
             player.WriteToFile();
+
             score = 0;
             StackPane layoutEndGame = new StackPane();
             sceneEndGame = new Scene(layoutEndGame, 1200, 800);
